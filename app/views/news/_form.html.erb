@@ -1,0 +1,33 @@
+<%= form_for(@news) do |f| %>
+  <% if @news.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@news.errors.count, "error") %> prohibited this news from being saved:</h2>
+
+      <ul>
+      <% @news.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :date, "Дата" %><br />
+    <%= f.datetime_select :date %>
+  </div>
+  <div class="field">
+    <%= f.label :header, "Заголовок" %><br />
+    <%= f.text_field :header %>
+  </div>
+  <div class="field">
+    <%= f.label :short_text , "Краткий текст"%><br />
+    <%= f.text_area :short_text, :size => "70x5" %>
+  </div>
+  <div class="field">
+    <%= f.label :full_text , "Полный текст"%><br />
+    <%= f.text_area :full_text, :size => "70x20" %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

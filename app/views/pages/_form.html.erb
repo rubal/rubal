@@ -1,0 +1,66 @@
+<%= form_for(@page) do |f| %>
+<%
+	curr_role = nil
+	if @page.name.nil?
+		if !params[:role].nil? && roles_hash.has_key?(params[:role].to_sym)
+			curr_role = params[:role].to_sym
+		end
+	else
+		curr_role = get_role_by_id @page.role
+	end
+	vis = PagesController.visible_fields_hash curr_role
+
+	 %>
+    <%= hidden_field_tag 'role', curr_role.to_s %>
+	 <h2><%= (curr_role.nil?) ? "" : roles_hash[curr_role]["name"] %></h2>
+  <% if @page.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@page.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @page.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+	<% if vis[:name] then %>
+	  <div class="field">
+	    <%= f.label :name, "Название" %><br />
+	    <%= f.text_field :name %>
+	  </div>
+	<%end%>
+	<% if vis[:title] %>
+  <div class="field">
+    <%= f.label :title, "Заголовок"%><br />
+    <%= f.text_field :title %>
+  </div>
+  <%end%>
+  <% if vis[:url] %>
+   <div class="field">
+	<%= f.label :url, "url страницы (.html в конце добавится автоматически)" %><br />
+	<%= f.text_field :url, :size=> 10 %><b>.html</b>
+    </div>
+  <%end%>
+  <% if vis[:subst_name] %>
+   <div class="field">
+	<%= f.label :subst_name, "Имя подстановки" %><br />
+	<%= (curr_role == :chunk) ? "<b>[[chunk:</b>".html_safe : "" %><%= f.text_field :subst_name, :size => 15 %><%= (curr_role == :chunk) ? "<b>]]</b>".html_safe : "" %>
+    </div>
+  <%end%>
+  <% if vis[:role] %>
+    Тип <%= select :page, :role, get_roles_array%><br />
+    <%end%>
+  <% if vis[:template] then %>
+    Шаблон <%= select :page, :template, get_templates %><br />
+   <%end%>
+  <div>
+  	HTML код<br />
+  <%= text_area(:page, :page_content, :size => "70x15") %>
+  
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+  <br />
+<% end %>

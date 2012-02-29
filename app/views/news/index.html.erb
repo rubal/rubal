@@ -1,0 +1,28 @@
+<h1>Список новостей</h1>
+<%= link_to 'Добавить новость', new_news_path %>
+
+<table>
+  <tr>
+    <th>Дата</th>
+    <th>Заголовок</th>
+    <th>Краткий текст</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @news.each do |news| %>
+  <tr>
+    <td><%= news.date.strftime("%d/%m/%Y") %></td>
+    <td><%= news.header %></td>
+    <td><%= news.short_text[0..50] + "..." %></td>
+    <td><%= link_to 'Показать', news %></td>
+    <td><%= link_to 'Ред.', edit_news_path(news) %></td>
+    <td><%= link_to 'Удалить', news, confirm: 'Точно?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'Добавить новость', new_news_path %>

@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title><%= (@admin_action_name.nil?) ? "" : @admin_action_name + " - "%>Rubal CMS</title>
+		<%= stylesheet_link_tag    "application", :media => "all" %>
+		  <%= javascript_include_tag "application" %>
+		  <%= csrf_meta_tags %>
+		  <%= stylesheet_link_tag "admin-panel.css" %>
+      <% if params[:notice] %>
+          <script type="text/javascript">
+              alert("<%=params[:notice]%>")
+          </script>
+      <% end %>
+    </head>
+    <body>
+        <div id="header">
+            <div id="header-top">
+            	<%= link_to('Редактировать учетную запись', edit_user_registration_path) %>
+                <%= link_to('Создать пользователя', url_for(:controller => 'admin', :action => 'new_user'))  %>
+                <%= link_to('Выйти', destroy_user_session_path, :method => :delete) %>   
+            </div>
+            <div id="header-bottom">
+                <%= link_to 'Страницы', pages_path %>
+				<%= link_to 'Новости', news_path %>
+            </div>
+        </div>
+        <div id="main" >
+            <div class="window">
+                <div class="title">
+                    <%= (@admin_action_name.nil?) ? "" : @admin_action_name %>
+                </div>
+                <div class="body">
+                	 
+                    <div class="block"><p class="notice"><%= notice %></p>
+ 					 <p class="alert"><%= alert %></p>
+                        <div class="body">
+                        	<%= yield %> 
+                        </div>
+                   
+				
+				</div>
+                </div>
+            </div>
+
+        </div>
+        <div id="footer">
+        </div>
+    </body>
+</html>
