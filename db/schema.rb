@@ -11,15 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 1) do
+ActiveRecord::Schema.define(:version => 20120301080605) do
 
   create_table "news", :force => true do |t|
     t.datetime "date"
-    t.string   "header"
     t.text     "short_text"
     t.text     "full_text"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.string   "header"
+    t.string   "trend_name", :default => "news"
   end
 
   create_table "pages", :force => true do |t|
@@ -55,7 +56,5 @@ ActiveRecord::Schema.define(:version => 1) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-  
-  @first_admin = User.new(:email => "admin@rubal.ru", :password =>  "adminpass", :password_confirmation =>  "adminpass")
-  @first_admin.save
+
 end

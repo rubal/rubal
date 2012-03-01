@@ -54,7 +54,7 @@
 <% @chunks.each do |page| %>
   <tr>
     <td><%= page.name %></td>
-    <td><b>[[chunk:<%= page.url %>]]</b></td>
+    <td><b>[[chunk:<%= page.subst_name %>]]</b></td>
     <td><%= link_to 'Править', edit_page_path(page) %></td>
     <td><%= link_to 'Удалить', page, confirm: 'Точно?', method: :delete %></td>
   </tr>

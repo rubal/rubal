@@ -1,6 +1,8 @@
 <h1>Список новостей</h1>
-<%= link_to 'Добавить новость', new_news_path %>
-
+<!--<%= @news.to_a.to_s %>-->
+<%= link_to 'Добавить', new_news_path %>
+<% get_news_trends.each { |trend| %>
+    <h1><%= trend[0] %></h1>
 <table>
   <tr>
     <th>Дата</th>
@@ -11,7 +13,7 @@
     <th></th>
   </tr>
 
-<% @news.each do |news| %>
+<% @news[trend[1]].each do |news| %>
   <tr>
     <td><%= news.date.strftime("%d/%m/%Y") %></td>
     <td><%= news.header %></td>
@@ -22,7 +24,7 @@
   </tr>
 <% end %>
 </table>
-
+<% } %>
 <br />
 
-<%= link_to 'Добавить новость', new_news_path %>
+<%= link_to 'Добавить', new_news_path %>

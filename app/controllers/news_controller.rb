@@ -3,10 +3,13 @@ class NewsController < ApplicationController
   # GET /news
   # GET /news.json
   before_filter :authenticate_user!
-  
+  include NewsHelper
   def index
     @admin_action_name = "Новости"
-    @news = News.all
+    @news = Hash.new
+    get_news_trends.each {|trend|
+      @news[trend[1]] = News.where(:trend_name => trend[1])
+    }
 
     respond_to do |format|
       format.html # index.html.erb

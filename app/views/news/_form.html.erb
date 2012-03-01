@@ -16,6 +16,9 @@
     <%= f.datetime_select :date %>
   </div>
   <div class="field">
+    Раздел <%= select :news, :trend_name, get_news_trends %><br />
+  </div>
+  <div class="field">
     <%= f.label :header, "Заголовок" %><br />
     <%= f.text_field :header %>
   </div>

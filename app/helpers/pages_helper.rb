@@ -61,9 +61,9 @@ module PagesHelper
     return "неизвестный тип"
   end
   
-  def get_params_for_news news
+  def get_params_for_news news, page_rendering_to_url
     return {"news" => {
-       "readmore_link" => "/nw/" + news.id.to_s + ".html", 
+       "readmore_link" => "/"+page_rendering_to_url+"/" + news.id.to_s + ".html",
        "id" => news.id,
        "header" => news.header,
        "date" => news.date.strftime("%d/%m/%Y"),
@@ -80,7 +80,8 @@ module PagesHelper
     values_hash.each_pair{ |param_name, params_hash|
       if !params_hash.nil? && !params_hash.empty?
       #finder_regex = Regexp.new ("\\[\\[" + param_name + ":([a-z0-9_\\-]*)\\]\\]")
-        finder_regex = Regexp.new("\\[\\[" + param_name + ":([a-zA-Z0-9_\\-]*)\\]\\]")
+        finder_regex = Regexp.new("\\[\\[" + param_name + ":(([a-zA-Z0-9_\\-]*)(, ?([a-zA-Z0-9_\\-]+))*)\\]\\]")
+        #Regexp.new("\\[\\[" + param_name + ":([a-zA-Z0-9_\\-]*)(, ?([a-zA-Z0-9_\\-]+))*)*\\]\\]")
         pr_text.gsub!(finder_regex) { |subst| params_hash[$1] }
       end
     }
@@ -91,40 +92,44 @@ module PagesHelper
     processing_text.replace! substitution processing_text, values_hash
   end
   
-  def get_news_list_string from = 0, limit = 10, newsid = -1
-      news = News.limit(limit).offset(from).order('id desc')
+  def get_news_list_string page_rendering_to_url, trend = 'news', from = 0, limit = 1000, newsid = -1
+      trend = 'news' if trend.nil?
+      news = News.where(:trend_name => trend).limit(limit).offset(from).order('id desc')
       res = ""
       news_pattr = read_file Page.where(:role => roles_hash[:news_short]["id"]).last.path
-      news.each { |n| res += substitution( news_pattr, get_params_for_news(n)) }
+      news.each { |n| res += substitution( news_pattr, get_params_for_news(n, page_rendering_to_url)) }
       return res
   end
   
-  def get_news_full_string newsid
+  def get_news_full_string page_rendering_to_url, newsid
       news_showing = News.find(newsid)
       news_pattr = read_file Page.where(:role => roles_hash[:news_full]["id"]).last.path
       res = ""
-      res += substitution( news_pattr, get_params_for_news(news_showing))
+      res += substitution( news_pattr, get_params_for_news(news_showing, page_rendering_to_url))
       return res
   end
   
   def get_params_for_page page
     #обычные параметры страницы
     params = {"param" => {"title" => page.title}}
-    #смотрим есть ли на странице динамические элементы (напр. новости [[dynamic:news]] )
-    dynamic_finder_regex = Regexp.new("\\[\\[dynamic:([a-zA-Z0-9_\\-]*)\\]\\]")
-    dynamic_search_results = page.page_content.scan(dynamic_finder_regex)
+
     unless page.additional_params.nil?
       params["param"].merge!(page.additional_params)
     end
 
+    #смотрим есть ли на странице динамические элементы (напр. новости [[dynamic:news]] )
+    dynamic_finder_regex = Regexp.new("\\[\\[dynamic:(([a-zA-Z0-9_\\-]*)(, ?([a-zA-Z0-9_\\-]+))*)\\]\\]")
+                           #Regexp.new("\\[\\[dynamic:([a-zA-Z0-9_\\-]*)\\]\\]")
+    dynamic_search_results = page.page_content.scan(dynamic_finder_regex)
+
     unless dynamic_search_results.empty?
       dyn_hash = Hash.new
       rr = ""
-      dynamic_search_results.each{|a|  
-        if(a[0] == "news" && params["param"]["newsid"].nil?)
-           dyn_hash.merge!({"news" => get_news_list_string} )
-        elsif (a[0] == "news")
-           dyn_hash.merge!({"news" => get_news_full_string(params["param"]["newsid"]) } )
+      dynamic_search_results.each{|a|
+        if(a[1] == "news" && params["param"]["newsid"].nil?)
+           dyn_hash.merge!({a[0] => get_news_list_string(page.url, a[3])} )
+        elsif (a[1] == "news")
+           dyn_hash.merge!({a[0] => get_news_full_string(page.url, params["param"]["newsid"]) } )
            
         elsif (a[0] == "admin_panel")
           #TODO : добавление админ панельки на страницу
@@ -141,7 +146,7 @@ module PagesHelper
         chunk_hash = Hash.new
         rr = ""
         chunk_search_results.each{|a|
-          found_chunk = Page.where(:role => roles_hash[:chunk]["id"], :url => a[0]).first
+          found_chunk = Page.where(:role => roles_hash[:chunk]["id"], :subst_name => a[0]).first
           chunk_hash.merge!({a[0] => render_page(found_chunk, false) } ) unless found_chunk.nil?
         }
         params.merge!({"chunk"=> chunk_hash})

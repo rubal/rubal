@@ -4,7 +4,7 @@ class AdressValidator < ActiveModel::Validator
   def validate (page)
     roles = roles_hash
     if page.role == roles[:page]["id"]
-      unless page.url.nil?
+      if page.url.nil?
         page.errors[:url] << 'может содержать только буквы латинского алфавита, цифры, _ и -'  if page page.url.match('^[a-zA-Z\-_0-9]*$').nil?
       end
     elsif page.role == roles[:chunk]["id"]
