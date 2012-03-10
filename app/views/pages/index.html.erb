@@ -8,6 +8,7 @@
     <th>URL</th>
     <th>Шаблон</th>
     <th></th>
+	<th></th>
     <th></th>
   </tr>
 
@@ -17,7 +18,8 @@
     <td><%= page.title %></td>
     <td><a href="/<%= page.url %>.html">/<%= page.url %>.html</a></td>
     <td><%= get_page_name page.template %></td>
-    <td><%= link_to 'Править', edit_page_path(page) %></td>
+    <td><%= link_to 'Ред.', edit_page_path(page) %></td>
+	<td><%= link_to 'Ред. HTML', edit_page_path(page) + '?edithtml=1' %></td>
     <td><%= link_to 'Удалить', page, confirm: 'Точно?', method: :delete %></td>
   </tr>
 <% end %>
@@ -30,13 +32,15 @@
     <th>Используется</th>
     <th></th>
     <th></th>
+	<th></th>
   </tr>
 
 <% @templates.each do |page| %>
   <tr>
     <td><%= page.name %></td>
     <td style="text-align:center;"><%= get_template_uses page.id%></td>
-    <td><%= link_to 'Править', url_for(:controller => 'pages', :action => 'edit', :id => page.id, :role => 'templates') %></td>
+    <td><%= link_to 'Ред.', edit_page_path(page) %></td>
+	<td><%= link_to 'Ред. HTML', edit_page_path(page) + '?edithtml=1' %></td>
     <td><%= link_to 'Удалить', page, confirm: 'Точно?', method: :delete %></td>
   </tr>
 <% end %>
@@ -55,14 +59,15 @@
   <tr>
     <td><%= page.name %></td>
     <td><b>[[chunk:<%= page.subst_name %>]]</b></td>
-    <td><%= link_to 'Править', edit_page_path(page) %></td>
+    <td><%= link_to 'Ред.', edit_page_path(page) %></td>
+	<td><%= link_to 'Ред. HTML', edit_page_path(page)  + '?edithtml=1' %></td>
     <td><%= link_to 'Удалить', page, confirm: 'Точно?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
 <h2>Новостные шаблоны</h2>
-<%= link_to 'Новый шаблон новости в списке', url_for(:controller => 'pages', :action => 'new', :role => 'news_short')  %><br />
-<%= link_to 'Новый шаблон одной новости', url_for(:controller => 'pages', :action => 'new', :role => 'news_full')  %><br />
+<%= link_to 'Новый шаблон новости в списке', url_for(:controller => 'pages', :action => 'new', :role => 'news_short') %><br />
+<%= link_to 'Новый шаблон одной новости', url_for(:controller => 'pages', :action => 'new', :role => 'news_full') + '?edithtml=1' %><br />
 
 <b>Если несколько, использоваться будет последний отредактированный</b>
 <table class="pages_table">
@@ -77,7 +82,8 @@
   <tr>
     <td><%= page.name %></td>
     <td><%= get_role_name page.role%></td>
-    <td><%= link_to 'Править', edit_page_path(page) %></td>
+    <td><%= link_to 'Ред.', edit_page_path(page) %></td>
+	<td><%= link_to 'Ред. HTML', edit_page_path(page) + '?edithtml=1' %></td>
     <td><%= link_to 'Удалить', page, confirm: 'Точно?', method: :delete %></td>
   </tr>
 <% end %>

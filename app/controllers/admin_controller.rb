@@ -1,5 +1,7 @@
 class AdminController < ApplicationController
   before_filter :authenticate_user!
+  #require 'loaded/ModuleTest'
+
   def new_user
     @user = User.new
 

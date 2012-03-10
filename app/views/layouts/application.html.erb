@@ -11,12 +11,14 @@
           <script type="text/javascript">
               <% if params[:notice] %>
               alert("<%=params[:notice]%>");
-              <% end %>
+			  <% end %>
+			  <% unless params[:edithtml] %> 
               $(document).ready(function() {
                 $('textarea').tinymce({
                   theme: 'advanced'
                 });
               });
+			  <% end %>
           </script>
 
     </head>

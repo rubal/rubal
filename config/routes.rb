@@ -11,8 +11,7 @@ Rubal::Application.routes.draw do
     match 'p/:role/create' => 'pages#create'
     match '/new_user' => 'admin#new_user'
     match '/create_user' => 'admin#create_user'
-    resources :pages
-    resources :pages, :news
+    resources :pages, :news, :news_trends
     devise_for :users, :controllers  => { :registrations => "registrations" }
   end
 

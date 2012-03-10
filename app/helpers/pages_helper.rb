@@ -96,14 +96,14 @@ module PagesHelper
       trend = 'news' if trend.nil?
       news = News.where(:trend_name => trend).limit(limit).offset(from).order('id desc')
       res = ""
-      news_pattr = read_file Page.where(:role => roles_hash[:news_short]["id"]).last.path
+      news_pattr = read_file NewsTrend.where(:key => trend).first.short_template.path
       news.each { |n| res += substitution( news_pattr, get_params_for_news(n, page_rendering_to_url)) }
       return res
   end
   
   def get_news_full_string page_rendering_to_url, newsid
       news_showing = News.find(newsid)
-      news_pattr = read_file Page.where(:role => roles_hash[:news_full]["id"]).last.path
+      news_pattr = read_file NewsTrend.where(:key => news_showing.trend_name).first.full_template.path
       res = ""
       res += substitution( news_pattr, get_params_for_news(news_showing, page_rendering_to_url))
       return res

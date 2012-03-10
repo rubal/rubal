@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120301080605) do
+ActiveRecord::Schema.define(:version => 20120303091654) do
 
   create_table "news", :force => true do |t|
     t.datetime "date"
@@ -22,6 +22,18 @@ ActiveRecord::Schema.define(:version => 20120301080605) do
     t.string   "header"
     t.string   "trend_name", :default => "news"
   end
+
+  create_table "news_trends", :force => true do |t|
+    t.string   "key"
+    t.string   "name"
+    t.integer  "full_template_id"
+    t.integer  "short_template_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "news_trends", ["full_template_id"], :name => "index_news_trends_on_full_template_id"
+  add_index "news_trends", ["short_template_id"], :name => "index_news_trends_on_short_template_id"
 
   create_table "pages", :force => true do |t|
     t.string   "name"
