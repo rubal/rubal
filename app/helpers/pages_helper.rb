@@ -92,7 +92,7 @@ module PagesHelper
     processing_text.replace! substitution processing_text, values_hash
   end
   
-  def get_news_list_string page_rendering_to_url, trend = 'news', from = 0, limit = 1000, newsid = -1
+  def get_news_list_string page_rendering_to_url, trend = 'news', from = 0, limit = 1000
       trend = 'news' if trend.nil?
       news = News.where(:trend_name => trend).limit(limit).offset(from).order('id desc')
       res = ""
