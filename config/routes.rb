@@ -1,39 +1,4 @@
-include RegistrationsHelper
-
 Rubal::Application.routes.draw do
-
-  #devise_for :users
-
-  root :to => 'pages#show', :url => 'index'
-
-  scope "/admin" do
-    match 'p/:role/new' => 'pages#new'
-    match 'p/:role/create' => 'pages#create'
-    match '/new_user' => 'admin#new_user'
-    match '/create_user' => 'admin#create_user'
-    resources :pages, :news, :news_trends
-    devise_for :users, :controllers  => { :registrations => "registrations" }
-  end
-
-  #if true
-  #  devise_for :users, :controllers => { :registrations => "registrations" }
-  #else
-  #  devise_for :users
-  #end
-
-  #get "admin/show"
-  match '/admin' => 'admin#show'
-  #match '/admin/pages/' => 'pages#index'
-  #match '/admin/pages/edit/:id' => 'pages#edit'
-  #match '/admin/pages/delete/:id' => 'pages#delete'
-  #match '/admin/pages/create/' => 'pages#create'
-  #resources :news
-  #resources :pages
-  match '/:url.html' => 'pages#show'
-  match '/:url.json' => 'pages#show', :format => 'json'
-
-  match '/:url/:newsid.html' => 'pages#show'
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

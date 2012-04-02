@@ -36,11 +36,3 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
-gem 'russian', '~> 0.6.0'
-gem 'devise', '~> 2.0.1'
-gem 'devise-russian', '~> 2.0.1'
-gem 'tinymce-rails'
-gem 'execjs'
-gem 'therubyracer'
-
-gem 'mysql2'

@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-Rubal::Application.config.secret_token = 'bd97f3e48c9fcfada3575717d4cb28985cbf714cbe302b70d127006c367cd1ef35267c9997e7f061883e207d1ba8ed5f1a2137b4b9b3f929483c90c7883706e1'
+Rubal::Application.config.secret_token = '698bfc5396f3a1361b2b7ea8a2d29777a3620e2f471fdf4530a5faf909cb0988a22395967af7be41eb78f88106b078d35b4abfeb4e7427a9abdfef968f33531d'
