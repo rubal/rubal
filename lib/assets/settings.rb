@@ -1,30 +1,53 @@
+# Author::    Dmitriy Romanov  (mailto:romanov@rubal.ru)
+
 require 'singleton'
 
+#SettingsCategory -- container for module settings
 class SettingsCategory < Hash
   attr_reader :name
 
+  # * name -- category name, should be symbol
+  # * data -- settings group hash
   def initialize name, data
     @name = name
     merge! data
   end
 end
 
+# Settings provide adding, removing, editing CMS and CMS modules settings
+#
+# == Usage
+#   settings = Settings.instance
+#   puts settings[:common][:cmsname]
+#
+#   settings[:cache][:cache_by_dafault]=true
+#   settings.flush # Store settings changes into file
 class Settings < Hash
   include Singleton
+
+  # Settings file
   Filename = 'settings_db.rb'
 
-  def initialize
+  def initialize # :nodoc:
     load
   end
 
+  # Add category.
+  # * category -- instance of SettingsCategory
   def add_category category
     self[category.name] = category
   end
 
+  # Remove category
+  # * category_name -- symbol
+  # Also, u can use std hash remove:
+  #   settings.delete! :category
   def remove_category category_name
     delete! category_name
   end
 
+  # Reload configs from file
+  # * filename -- path to file
   def load filename = Filename
     settings = eval File.read filename
     settings.each{|category_name,category_data|
@@ -35,6 +58,8 @@ class Settings < Hash
     throw_error
   end
 
+  # Save changes to file
+  # * filename -- path to file
   def flush filename = Filename
     File.open(filename,"w"){|file|
       file.print self.to_s
@@ -45,7 +70,7 @@ class Settings < Hash
   end
   alias save flush
 
-  def to_s
+  def to_s # :nodoc:
     s = "{"
     self.each{|category_name,category_data|
       s << ":#{category_name}=>\n\t" << category_data.to_s.gsub(/ /){ "\n\t" } << ",\n"
