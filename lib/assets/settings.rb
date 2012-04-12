@@ -75,7 +75,7 @@ class Settings < Hash
     self.each{|category_name,category_data|
       s << ":#{category_name}=>\n\t" << category_data.to_s.gsub(/ /){ "\n\t" } << ",\n"
     }
-    s << "}"
+    s << "}\n"
   end
 
   ## Supporting YAML format
