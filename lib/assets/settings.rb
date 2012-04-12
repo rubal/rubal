@@ -49,6 +49,7 @@ class Settings < Hash
   # Reload configs from file
   # * filename -- path to file
   def load filename = Filename
+    clear
     settings = eval File.read filename
     settings.each{|category_name,category_data|
       add_category SettingsCategory.new category_name, category_data
