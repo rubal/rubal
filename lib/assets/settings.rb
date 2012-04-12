@@ -35,15 +35,16 @@ class Settings < Hash
   # Add category.
   # * category -- instance of SettingsCategory
   def add_category category
+    raise TypeError unless category.class == SettingsCategory
     self[category.name] = category
   end
 
   # Remove category
   # * category_name -- symbol
   # Also, u can use std hash remove:
-  #   settings.delete! :category
+  #   settings.delete :category
   def remove_category category_name
-    delete! category_name
+    delete category_name
   end
 
   # Reload configs from file
