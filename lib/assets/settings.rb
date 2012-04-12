@@ -26,7 +26,7 @@ class Settings < Hash
   include Singleton
 
   # Settings file
-  Filename = 'settings_db.rb'
+  Filename = Rails.root.to_s + '/lib/assets/settings_db.rb'
 
   def initialize # :nodoc:
     load

@@ -1,43 +1,50 @@
-<h1>Admin#index Test Menu</h1>
-<div id="MenuTest">
-  <%
-     def dep_search(menu_node, rec_dep)
-       #if !menu_node.is_a?(MenuNode)
-       #  return
-       #end
-       h = menu_node.get_hash_node
+<div class="window">
+  <div class="title">
+    Admin#index Test Menu
+  </div>
+  <div class="body">
+    <div id="MenuTest">
+      <%
+         def dep_search(menu_node, rec_dep)
+           #if !menu_node.is_a?(MenuNode)
+           #  return
+           #end
+           h = menu_node.get_hash_node
 
-  %>
-  <%
-        sum = ""
-        rec_dep.times{
-            sum += "--"
-        }
-  %>
-      <%= sum %>
-      <%= link_to h[:name], h[:url]%>
-      <%= rec_dep %>
-      <%= p "parent=#{menu_node.get_parent}" %>
-      <%= p "self=#{menu_node}" %>
-      <%=  %>
+      %>
+          <%
+             sum = ""
+             rec_dep.times{
+               sum += "--"
+             }
+          %>
+          <%= sum %>
+          <%= link_to h[:name], h[:url]%>
+          <%= rec_dep %>
+          <%= p "parent=#{menu_node.get_parent}" %>
+          <%= p "self=#{menu_node}" %>
+          <%=  %>
           <%  children = menu_node.get_children %>
-      <br />
+          <br />
       <%  rec_dep += 1
           children.each{|child|
             if child.is_a?(MenuNode)
-                dep_search(child, rec_dep)
+              dep_search(child, rec_dep)
             end
           }
-    end
-         # добавление потомка к потомку
-     #children = @out_mm.get_children
-     #children[0].add_child= MenuNode.new
+          end
+          # добавление потомка к потомку
+          #children = @out_mm.get_children
+          #children[0].add_child= MenuNode.new
 
 
-     dep_search(@out_mm, 0)
-     @out_mm.get_children
+          dep_search(@out_mm, 0)
+          @out_mm.get_children
 
 
-  %>
-<%=  @out_mm.get_parent %>
+      %>
+      <%=  @out_mm.get_parent %>
     </div>
+  </div>
+</div>
+

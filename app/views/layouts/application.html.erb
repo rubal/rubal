@@ -8,7 +8,29 @@
 </head>
 <body>
 
-<%= yield %>
+<div id="header">
+  <div id="header-top">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Contacts</a>
+  </div>
+  <div id="header-bottom" class="gradient">
+    <div id="header-text">
+      <a href="/admin/pages">Страницы</a>
+      <a href="/admin/news">Новости</a>
+    </div>
+    <div id="header-logo"><a href="http://rubalcms.org"><img src="/assets/header-logo.png" alt="Rubal CMS"/></a></div>
+  </div>
+</div>
+
+<div id="main" >
+  <%= yield %>
+</div>
+
+<div id="footer" class="gradient">
+</div>
+
+
 
 </body>
 </html>
