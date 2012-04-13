@@ -2,6 +2,8 @@
   require 'singleton'
   # Подключать меню не обязательно(!?)
   require File.expand_path('../../config/init_menu', __FILE__)
+  require "logger"
+  #log = Logger.new(STDERR)
 
   # :title:Menu_Node
   # === Parameters
@@ -21,6 +23,8 @@
     @hash_node # = {}:pages => node1, :adminka => node2}
     # массив потомков нода
     @children_arr # = [child1, child2, ...]
+    #@log
+
     # скрываем конструктор по умолчанию
     private_class_method :new
 
@@ -30,49 +34,35 @@
       @children_arr = Array.new()
       @hash_node = Hash[:name => "default_name", :url => "/default/url"]
       # по умолчанию нод принадлежит базовому предку (супре предку)
-      #super_parent = MenuNode.add_node(Hash[:name => "super_parent", :url => "no_url"])
+      #super_parent = MenuNode.new_node(Hash[:name => "super_parent", :url => "no_url"])
       #super_parent.set_parent= nil
       #@parent = super_parent
+
+      #@log = Logger.new(STDOUT)
+      #@log.level = Logger::WARN
     end
-
-    # свой конструктор
-    #def self.my_new
-    #  new()
-    #end
-
-
-    #private
-    #def self.new
-    #
-    #end
-
-    #def self.my_new
-    #  return super_parent = self.new
-    #end
-
-    #private
-    #def self.new
-    #  p "new!"
-    #  MenuNode.new
-    #end
-    #public
 
     # Свой конструктор для нодов
     # добавляет нод полностью (с массивом потомков)
     # и возвращает ссылку на созданный MenuNode
-    # e.g.: M = MenuNode({:name => "my_name", :url => "my_url"}, [MenuNode.add_node, MenuNode.add_node], parent_node)
+    # e.g.: M = MenuNode({:name => "my_name", :url => "my_url"}, [MenuNode.new_node, MenuNode.new_node], parent_node)
 
-    def self.add_node(node_hash = {}, children = [], parent = nil)
+    def self.new_node(node_hash = {}, children = [], parent = nil)
+      #используем приватный конструктор по умолчанию
       mn = new()
       #mn = MenuNode.new
       if parent.class == MenuNode
         self.set_parent= parent
+      else
+        #@log.warn("MenuNode.new_node: parent must be MenuNode class")
       end
 
       mn.add_hash= node_hash
       # проверка ключей
-      if children.is_a?(Array)
+      if children.is_a?(Array) && children.all?{|child| child.class == MenuNode}
         mn.add_children= children
+      else
+        #@log.warn("MenuNode.new_node: children parameter must be Array of MenuNode elements")
       end
       return mn
     end
@@ -95,20 +85,37 @@
 
     # Задает массив потомков (существующий массив удаляется)
     def set_children= ( arr )
-      #newarr = arr.reject{|child|
-      newarr = arr.each{|child|
-        #child != MenuNode
+      # только если передан массив
+      if arr.class != Array
+        #@log.warn("To set_children= given not Array")
+        return
+      end
+      new_arr = Array.new
+      arr.each{|child|
         if child.class == MenuNode
-          child.set_parent= self
+          child.set_parent = self
+          new_arr.push(child)
+        else
+          @log.warn("set_children: not MenuNode in array parameters")
         end
-        #else raise "Wrong type argument was given to set_children. MenuNode need."
-
       }
+      @children_arr = arr
+
+      #newarr = arr.each{|child|
+      #  #child != MenuNode
+      #  if child.class == MenuNode
+      #    child.set_parent= self
+      #  end
+      #  #else raise "Wrong type argument was given to set_children. MenuNode need."
+      #
+      #}
+      #@children_arr = arr
+
       #newarr.each{|child|
       #  child.set_parent= self
       #}
       #@children_arr = newarr
-      @children_arr = arr
+
     end
 
     # Добавляет после указанного нода новый нод
@@ -179,7 +186,7 @@
         @hash_node = hash
       end
     end
-    alias set_hash add_hash=
+    alias set_hash= add_hash=
 
     # добавляет одного потомка
     def add_child=( child )
@@ -208,13 +215,18 @@
 
     # Удаляет текущий нод и возвращает массив без этого нода
     # !Невозможно удалить нод, который не является чьим-либо потомком!
-    #def del_node!
-    #  par = self.get_parent
-    #  chan = par.get_children
-    #  chan.reject!{|child|
-    #    self == child
-    #  }
-    #end
+    def del_node!
+
+      par = self.get_parent
+      # нет потомков
+      if par == nil
+        return
+      end
+      chan = par.get_children
+      chan.reject!{|child|
+        self == child
+      }
+    end
 
     # Выводит содержимое нода
     def get_hash_node
@@ -270,7 +282,7 @@
     end
   end
 
-  a = MenuNode.add_node({:name => "asdf", :url => "jljj"}, [], nil)
+  a = MenuNode.new_node({:name => "asdf", :url => "jljj"}, [], nil)
   #p a = MenuNode.my_new
 
   #log = Logger.new("../../log/development.log")
@@ -279,27 +291,28 @@
   menu_arr_size = menu_arr.size
 
   # создаем для каждого элемента массива НОВЫЙ! МенюНод
-  arr_nodes = Array.new(menu_arr_size) {|el| el = MenuNode.add_node }
+  arr_nodes = Array.new(menu_arr_size) {|el| el = MenuNode.new_node }
   arr_nodes.each_index{|i|
     arr_nodes[i].add_hash= menu_arr[i]
   }
 
   # добавление потомка для потомка
   #ch = nodes[0].get_children
-  #ch[0].add_child= MenuNode.add_node
+  #ch[0].add_child= MenuNode.new_node
 
   #arr_nodes[0].add_node({:name => "Main_Menu", :url => "Main_URL"})
 
 
   mm = MainMenu.instance
+
   mm.add_hash={:name => "Main_Menu", :url => "Main_URL"}
-  #arr_nodes[1].add_child= MenuNode.add_node
+  #arr_nodes[1].add_child= MenuNode.new_node
   mm.add_children= arr_nodes
 
 
-  arr_nodes[1].after!(MenuNode.add_node)
-  arr_nodes[2].before!(MenuNode.add_node)
-  new = MenuNode.add_node({:name => "superName", :url => "superUrl"})
+  arr_nodes[1].after!(MenuNode.new_node)
+  arr_nodes[2].before!(MenuNode.new_node)
+  new = MenuNode.new_node({:name => "superName", :url => "superUrl"})
   mm.add_child= new
 
 
