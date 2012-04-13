@@ -157,7 +157,15 @@
   
     <li><a href="./MenuNode.html">MenuNode</a>
   
+    <li><a href="./MyTest.html">MyTest</a>
+  
     <li><a href="./Object.html">Object</a>
+  
+    <li><a href="./PostTest.html">PostTest</a>
+  
+    <li><a href="./Settings.html">Settings</a>
+  
+    <li><a href="./SettingsCategory.html">SettingsCategory</a>
   
   </ul>
 </nav>
@@ -184,12 +192,12 @@ href="MenuNode.html">MenuNode</a></p>
 
 <p><a href="MenuNode.html">MenuNode</a> имеет члены:</p>
 <ul><li>
-<p><code>hash_node</code>     e.g. {:url =&gt; "/menu_url1", :name =&gt;
+<p><code>@hash_node</code>     e.g. {:url =&gt; "/menu_url1", :name =&gt;
 "Menu_Node1" }</p>
 </li><li>
-<p><code>children_arr</code>  e.g. [MenuNode1, MenuNode2]</p>
+<p><code>@children_arr</code>  e.g. [MenuNode1, MenuNode2]</p>
 </li><li>
-<p><code>parent</code>        e.g. MenuNode1</p>
+<p><code>@parent</code>        e.g. MenuNode1</p>
 </li></ul>
 
   </div><!-- description -->
@@ -260,8 +268,8 @@ href="MenuNode.html">MenuNode</a></p>
 
         <div class="method-description">
           
-          <p>Создает массив потомков children_arr и хэш
-по-умолчанию</p>
+          <p>Создает пустой массив потомков children_arr и
+хэш по-умолчанию</p>
           
 
           
@@ -304,7 +312,7 @@ href="MenuNode.html">MenuNode</a></p>
 
           
           <div class="method-source-code" id="add_child-3D-source">
-            <pre><span class="ruby-comment"># File lib/menu.rb, line 114</span>
+            <pre><span class="ruby-comment"># File lib/menu.rb, line 115</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add_child=</span>( <span class="ruby-identifier">child</span> )
   <span class="ruby-comment"># для child назначается родитель-текущий нод</span>
   <span class="ruby-identifier">child</span>.<span class="ruby-identifier">set_parent</span>(<span class="ruby-keyword">self</span>)
@@ -336,7 +344,7 @@ href="MenuNode.html">MenuNode</a></p>
 
           
           <div class="method-source-code" id="add_children-3D-source">
-            <pre><span class="ruby-comment"># File lib/menu.rb, line 121</span>
+            <pre><span class="ruby-comment"># File lib/menu.rb, line 122</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add_children=</span>( <span class="ruby-identifier">children</span> )
   <span class="ruby-identifier">children</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">child</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">child</span>.<span class="ruby-identifier">set_parent</span>(<span class="ruby-keyword">self</span>)
@@ -369,7 +377,7 @@ href="MenuNode.html">MenuNode</a></p>
 
           
           <div class="method-source-code" id="add_hash-3D-source">
-            <pre><span class="ruby-comment"># File lib/menu.rb, line 109</span>
+            <pre><span class="ruby-comment"># File lib/menu.rb, line 110</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">add_hash=</span>(<span class="ruby-identifier">hash</span>)
   <span class="ruby-ivar">@hash_node</span> = <span class="ruby-identifier">hash</span>
 <span class="ruby-keyword">end</span></pre>
@@ -404,6 +412,7 @@ href="MenuNode.html">MenuNode</a></p>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">after!</span>(<span class="ruby-identifier">node</span>)
   <span class="ruby-comment"># параметр должен быть класса MenuNode</span>
   <span class="ruby-keyword">if</span> (<span class="ruby-operator">!</span><span class="ruby-identifier">node</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">MenuNode</span>))
+    <span class="ruby-comment">#log.error( &quot;Not MenuNode object was given&quot; )</span>
     <span class="ruby-identifier">p</span> <span class="ruby-string">&quot;Not MenuNode object was given&quot;</span>
     <span class="ruby-keyword">return</span>
   <span class="ruby-keyword">end</span>
@@ -411,7 +420,6 @@ href="MenuNode.html">MenuNode</a></p>
   <span class="ruby-identifier">parent_children</span> = <span class="ruby-identifier">parent</span>.<span class="ruby-identifier">get_children</span>
   <span class="ruby-identifier">parent_children</span>.<span class="ruby-identifier">each_index</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">index</span><span class="ruby-operator">|</span>
     <span class="ruby-comment"># если найден нод, после которого нужно вставлять</span>
-    <span class="ruby-identifier">p</span> <span class="ruby-identifier">index</span>
     <span class="ruby-keyword">if</span> (<span class="ruby-identifier">parent_children</span>[<span class="ruby-identifier">index</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword">self</span>)
       <span class="ruby-comment"># вырезает элементы массива до нода(включительно)), после которого будет вставка</span>
       <span class="ruby-identifier">tmp_arr1</span> = <span class="ruby-identifier">parent_children</span>.<span class="ruby-identifier">slice!</span>(<span class="ruby-value">0</span>,<span class="ruby-identifier">index</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)
@@ -454,6 +462,7 @@ href="MenuNode.html">MenuNode</a></p>
             <pre><span class="ruby-comment"># File lib/menu.rb, line 85</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">before!</span>(<span class="ruby-identifier">node</span>)
   <span class="ruby-keyword">if</span> (<span class="ruby-operator">!</span><span class="ruby-identifier">node</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">MenuNode</span>))
+    <span class="ruby-comment">#log.error( &quot;Not MenuNode object was given&quot; )</span>
     <span class="ruby-identifier">p</span> <span class="ruby-string">&quot;Not MenuNode object was given&quot;</span>
     <span class="ruby-keyword">return</span>
   <span class="ruby-keyword">end</span>
@@ -500,7 +509,7 @@ href="MenuNode.html">MenuNode</a></p>
 
           
           <div class="method-source-code" id="construct_menu-source">
-            <pre><span class="ruby-comment"># File lib/menu.rb, line 158</span>
+            <pre><span class="ruby-comment"># File lib/menu.rb, line 159</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">construct_menu</span>
 
 <span class="ruby-keyword">end</span></pre>
@@ -531,7 +540,7 @@ href="MenuNode.html">MenuNode</a></p>
 
           
           <div class="method-source-code" id="del_node-21-source">
-            <pre><span class="ruby-comment"># File lib/menu.rb, line 133</span>
+            <pre><span class="ruby-comment"># File lib/menu.rb, line 134</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">del_node!</span> <span class="ruby-comment">#( node )</span>
   <span class="ruby-identifier">par</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">get_parent</span>
   <span class="ruby-identifier">chan</span> = <span class="ruby-identifier">par</span>.<span class="ruby-identifier">get_children</span>
@@ -565,7 +574,7 @@ href="MenuNode.html">MenuNode</a></p>
 
           
           <div class="method-source-code" id="get_children-source">
-            <pre><span class="ruby-comment"># File lib/menu.rb, line 153</span>
+            <pre><span class="ruby-comment"># File lib/menu.rb, line 154</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_children</span>
   <span class="ruby-ivar">@children_arr</span>
 <span class="ruby-keyword">end</span></pre>
@@ -595,7 +604,7 @@ href="MenuNode.html">MenuNode</a></p>
 
           
           <div class="method-source-code" id="get_hash_node-source">
-            <pre><span class="ruby-comment"># File lib/menu.rb, line 142</span>
+            <pre><span class="ruby-comment"># File lib/menu.rb, line 143</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_hash_node</span>
   <span class="ruby-ivar">@hash_node</span>
 <span class="ruby-keyword">end</span></pre>
@@ -625,7 +634,7 @@ href="MenuNode.html">MenuNode</a></p>
 
           
           <div class="method-source-code" id="get_nodes-source">
-            <pre><span class="ruby-comment"># File lib/menu.rb, line 146</span>
+            <pre><span class="ruby-comment"># File lib/menu.rb, line 147</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">get_nodes</span>
   <span class="ruby-ivar">@children_arr</span>.<span class="ruby-identifier">each</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">node</span><span class="ruby-operator">|</span>
     <span class="ruby-identifier">node</span>
@@ -689,7 +698,7 @@ Parameters: нод, от которого вызывается
 
           
           <div class="method-source-code" id="rec_structure-source">
-            <pre><span class="ruby-comment"># File lib/menu.rb, line 164</span>
+            <pre><span class="ruby-comment"># File lib/menu.rb, line 165</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">rec_structure</span>(<span class="ruby-identifier">menu_node</span>,<span class="ruby-identifier">rec_dep</span>)
   <span class="ruby-identifier">h</span> = <span class="ruby-identifier">menu_node</span>.<span class="ruby-identifier">get_hash_node</span>
   <span class="ruby-identifier">sum</span> = <span class="ruby-string">&quot;&quot;</span>

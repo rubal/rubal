@@ -139,7 +139,15 @@
   
     <li><a href="./MenuNode.html">MenuNode</a>
   
+    <li><a href="./MyTest.html">MyTest</a>
+  
     <li><a href="./Object.html">Object</a>
+  
+    <li><a href="./PostTest.html">PostTest</a>
+  
+    <li><a href="./Settings.html">Settings</a>
+  
+    <li><a href="./SettingsCategory.html">SettingsCategory</a>
   
   </ul>
 </nav>
@@ -190,10 +198,10 @@
 
           
           <div class="method-source-code" id="show_menu_structure-source">
-            <pre><span class="ruby-comment"># File lib/menu.rb, line 186</span>
+            <pre><span class="ruby-comment"># File lib/menu.rb, line 187</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">show_menu_structure</span>
   <span class="ruby-ivar">@children_arr</span>.<span class="ruby-identifier">each_index</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">p</span> <span class="ruby-node">&quot;Node ##{i}&quot;</span>
+    <span class="ruby-comment">#p &quot;Node ##{i}&quot;</span>
     <span class="ruby-identifier">@@rec_dep</span> = <span class="ruby-value">0</span>
     <span class="ruby-identifier">rec_structure</span>(<span class="ruby-ivar">@children_arr</span>[<span class="ruby-identifier">i</span>],<span class="ruby-value">0</span>)
   }
