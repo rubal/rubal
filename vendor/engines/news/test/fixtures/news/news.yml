@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  id: 1
+  date: 2012-04-16 15:05:30
+  header: MyString
+  short_text: MyText
+  full_text: MyText
+
+two:
+  id: 1
+  date: 2012-04-16 15:05:30
+  header: MyString
+  short_text: MyText
+  full_text: MyText

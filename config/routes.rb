@@ -3,7 +3,7 @@
 
 Rubal::Application.routes.draw do
 
-  resources :news
+  #resources :news
 
   devise_for :admins
 
@@ -31,6 +31,7 @@ Rubal::Application.routes.draw do
   match 'thepages/' => 'thepages#index'
   match 'thepages/vhtml_edit/:id' => 'thepages#vhtml_edit'
   mount Blorgh::Engine, :at => "/blorgh"
+  mount News::Engine, :at => "/news"
 
 
   #match 'page/' => 'page_plugin_relations#index'

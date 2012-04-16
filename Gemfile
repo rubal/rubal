@@ -43,3 +43,4 @@ gem 'rubal_core', path: 'rubal_core'
 gem 'rubal_test_plugin', path: 'RubalTestPlugin'
 gem 'rubal_logo', path: 'rubal_logo'
 gem 'blorgh', :path => "vendor/engines/blorgh"
+gem 'news', :path => "vendor/engines/news"
