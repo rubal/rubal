@@ -1,6 +1,18 @@
+#require 'rubal_core'
+#require 'rubal_core/lib/rubal_core/plugin_manager'
+
 Rubal::Application.routes.draw do
   get "admin/index"
+  get "admin/test_controller"
+  get "admin/plugin_view"
+  get "admin/admin"
 
+
+  # получаем массив путей, установленных плагинами
+  routes_arr = PluginManager.instance.get_hash_array_routes
+  routes_arr.each { |el|
+    match el
+  }
 
 
   # The priority is based upon order of creation:
