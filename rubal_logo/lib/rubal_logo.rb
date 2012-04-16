@@ -48,4 +48,4 @@ module RubalLogo
   end
 end
 
-RubalLogo::RubalLogo.new
+RubalCore::PluginManager.instance.add_plugin RubalLogo::RubalLogo.new

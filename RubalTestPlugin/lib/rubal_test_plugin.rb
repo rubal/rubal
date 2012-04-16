@@ -44,4 +44,4 @@ module RubalTestPlugin
   end
 end
 
-RubalTestPlugin::RubalTestPlugin.new
+RubalCore::PluginManager.instance.add_plugin RubalTestPlugin::RubalTestPlugin.new
