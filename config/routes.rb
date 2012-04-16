@@ -6,8 +6,6 @@ Rubal::Application.routes.draw do
   get "admin/test_controller"
   get "admin/plugin_view"
   get "admin/admin"
-  get "admin/r"
-
 
   # получаем массив путей, установленных плагинами
   #routes_arr = PluginManager.instance.get_hash_array_routes
@@ -16,6 +14,7 @@ Rubal::Application.routes.draw do
   routes_arr.each { |el|
     match el
   }
+  match 'page/:id' => 'page#index'
 
   #match "admin/rubal_test_plugin/:id" => "admin#say_hello_admin"
   #match "admin/r" => "admin#r"
