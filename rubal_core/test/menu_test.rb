@@ -1,4 +1,4 @@
-require 'test_helper'
+require './test_helper'
 require 'rubal_core/menu'
 #require Rails.root.to_s + '/lib/menu.rb'
 

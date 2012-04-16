@@ -16,8 +16,35 @@
   </div>
   <div id="header-bottom" class="gradient">
     <div id="header-text">
+      <!--Main Menu will be here-->
+      <div id="menu">
+      <%
+      def rec_menu_output(menu_node, rec_dep)
+        if !menu_node.is_a?(MenuNode)
+          return
+        end
+      h = menu_node.get_hash_node
+      %>
+          <div class="div_menu_node" style="float:left;">
+      <%= link_to h[:name], h[:url], :class => "menu_node"%>
+          </div>
+      <%
+         children = menu_node.get_children
+         rec_dep += 1
+         children.each{|child|
+           if child.is_a?(MenuNode)
+             rec_menu_output(child, rec_dep)
+           end
+         }
+         end
+         rec_menu_output(@out_mm,0)
+      %>
+      </div>
+      <!--
+      Old Menu
       <a href="/admin/pages">Страницы</a>
       <a href="/admin/news">Новости</a>
+      -->
     </div>
     <div id="header-logo"><a href="http://rubalcms.org"><img src="/assets/header-logo.png" alt="Rubal CMS"/></a></div>
   </div>
@@ -25,12 +52,10 @@
 
 <div id="main" >
   <%= yield %>
+  <%= yield :plugin_name %>
 </div>
 
 <div id="footer" class="gradient">
 </div>
-
-
-
 </body>
 </html>

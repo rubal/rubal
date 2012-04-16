@@ -20,9 +20,9 @@ module RubalTestPlugin
 
     def initialize
       @routes =[
-          {"admin/c1/:id" => "admin#say_hello_admin"},
-          {"page/c1/:id" => "admin#say_hello_page"},
-          {"admin/i" => "admin#index"}
+          {"admin/rubal_test_plugin/:id" => "admin#say_hello_admin"},
+          {"page/rubal_test_plugin/:id" => "admin#say_hello_page"},
+          {"admin/rubal_test_plugin" => "admin#index"}
       ]
       @placeholders = [
           {

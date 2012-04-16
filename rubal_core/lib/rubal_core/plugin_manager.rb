@@ -32,6 +32,9 @@ module RubalCore
       @routes.push(route)
     end
 
+    def get_hash_array_routes
+      @routes
+    end
     # Add placeholder from plugin to CMS
     # * category #TODO: add doc
     # * param #TODO: add doc

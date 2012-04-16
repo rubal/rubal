@@ -73,7 +73,8 @@ module RubalCore
     # Пример: some_node становится потомком нода A
     # some_node.set_parent= A
     def set_parent=(parent_node)
-      if parent_node.class == MenuNode
+      # если родитель - это объект принадлежит классу МенюНод или унаследованн от класса МенюНод
+      if parent_node.class == MenuNode || parent_node.class.superclass == MenuNode
         @parent = parent_node
       end
     end
@@ -200,13 +201,13 @@ module RubalCore
     # добавляет массив потомков
     def add_children=( children )
       children.each{|child|
-        # добавляем только элемента типа MenuNode
+        # добавляем только элементы типа MenuNode
         if (child.class == MenuNode)
           child.set_parent= self
           @children_arr += [child]
         end
       }
-      #@children_arr += children
+    #@children_arr += children
     end
 
     # to do: одна рекурсивная функция обхода меню,
@@ -286,6 +287,10 @@ module RubalCore
   #p a = MenuNode.my_new
 
   #log = Logger.new("../../log/development.log")
+
+  mm = MainMenu.instance
+  MainMenu.instance.add_hash={:name => "Main_Menu", :url => "Main_URL"}
+
   # получаем элементы меню в виде элементов массива хэшей
   menu_arr = get_menu_array
   menu_arr_size = menu_arr.size
@@ -295,28 +300,13 @@ module RubalCore
   arr_nodes.each_index{|i|
     arr_nodes[i].add_hash= menu_arr[i]
   }
-
-  # добавление потомка для потомка
-  #ch = nodes[0].get_children
-  #ch[0].add_child= MenuNode.new_node
-
-  #arr_nodes[0].add_node({:name => "Main_Menu", :url => "Main_URL"})
-
-
-  mm = MainMenu.instance
-
-  mm.add_hash={:name => "Main_Menu", :url => "Main_URL"}
   #arr_nodes[1].add_child= MenuNode.new_node
-  mm.add_children= arr_nodes
+  MainMenu.instance.add_children= arr_nodes
 
+  # добавление в главное меню, после 2го элемента, новый нод "before 2"
+  MainMenu.instance.get_children[2].before!(MenuNode.new_node({:name => "before 2", :url => "before 2"}))
 
-  arr_nodes[1].after!(MenuNode.new_node)
-  arr_nodes[2].before!(MenuNode.new_node)
   new = MenuNode.new_node({:name => "superName", :url => "superUrl"})
-  mm.add_child= new
-
-
-
+  MainMenu.instance.get_children[0].add_child= new
   #new.del_node!
-
 end

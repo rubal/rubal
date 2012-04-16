@@ -1,49 +1,65 @@
+<% require 'rubal_core' %>
+<% require 'rubal_core/plugin_manager' %>
+
 <div class="window">
   <div class="title">
     Admin#index Test Menu
   </div>
   <div class="body">
     <div id="MenuTest">
+      <!--Debug menu table-->
+      <table border="1px">
+        <tr>
+          <td>Название элемента меню</td>
+          <td>Уровень вложенности</td>
+          <td>Нод-предок</td>
+          <td>Текущий нод</td>
+        </tr>
       <%
-         def dep_search(menu_node, rec_dep)
-           #if !menu_node.is_a?(MenuNode)
-           #  return
-           #end
+         # вывод ссылок меню для админки
+         # rec_menu_output
+         # вывод таблицы меню (дебаг режим)
+         def rec_debug_menu_output(menu_node, rec_dep)
+           if !menu_node.is_a?(MenuNode)
+             return
+           end
            h = menu_node.get_hash_node
-
-      %>
-          <%
              sum = ""
              rec_dep.times{
                sum += "--"
              }
           %>
-          <%= sum %>
-          <%= link_to h[:name], h[:url]%>
-          <%= rec_dep %>
-          <%= p "parent=#{menu_node.get_parent}" %>
-          <%= p "self=#{menu_node}" %>
-          <%=  %>
+
+            <tr>
+              <td>
+                <%= sum %>
+                <%= link_to h[:name], h[:url]%>
+              </td>
+              <td>
+                <%= rec_dep %>
+              </td>
+              <td>
+                <%= p "parent=#{menu_node.get_parent}" %>
+              </td>
+              <td>
+                <%= p "self=#{menu_node}" %>
+              </td>
+            </tr>
           <%  children = menu_node.get_children %>
           <br />
       <%  rec_dep += 1
           children.each{|child|
             if child.is_a?(MenuNode)
-              dep_search(child, rec_dep)
+              rec_debug_menu_output(child, rec_dep)
             end
           }
           end
-          # добавление потомка к потомку
-          #children = @out_mm.get_children
-          #children[0].add_child= MenuNode.new
-
-
-          dep_search(@out_mm, 0)
-          @out_mm.get_children
-
-
+          rec_debug_menu_output(@out_mm, 0)
+          ##rec_menu_output(@out_mm, 0)
+          #@out_mm.get_children
       %>
-      <%=  @out_mm.get_parent %>
+      </table>
+
     </div>
   </div>
 </div>

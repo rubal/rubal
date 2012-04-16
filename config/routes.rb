@@ -9,11 +9,13 @@ Rubal::Application.routes.draw do
 
 
   # получаем массив путей, установленных плагинами
-  routes_arr = PluginManager.instance.get_hash_array_routes
+  #routes_arr = PluginManager.instance.get_hash_array_routes
+
+  routes_arr = PluginManager.instance.routes
   routes_arr.each { |el|
     match el
   }
-
+  match "admin/rubal_test_plugin" => "admin#say_hello_admin"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
