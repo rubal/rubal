@@ -1,6 +1,7 @@
 require 'test_helper'
 require Rails.root.to_s + '/lib/assets/settings'
 
+include RubalCore
 # Запуск тестов (набирать из корня проекта): ruby -Itest test/unit/settings_test.rb
 
 class PostTest < ActiveSupport::TestCase

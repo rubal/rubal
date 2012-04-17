@@ -1,4 +1,4 @@
-#module Menu
+module RubalCore
   require 'singleton'
   # Подключать меню не обязательно(!?)
   require File.expand_path('../../config/init_menu', __FILE__)
@@ -319,4 +319,4 @@
 
   #new.del_node!
 
-#end
+end

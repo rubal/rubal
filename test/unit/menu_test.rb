@@ -1,6 +1,8 @@
 require 'test_helper'
 require Rails.root.to_s + '/lib/menu.rb'
 
+include RubalCore
+
 #require File.expand_path('../../../lib/menu', __FILE__)
 #require "test/unit"
 # Запуск тестов (набирать из корня проекта): ruby -Itest test/unit/menu_test.rb
