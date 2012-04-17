@@ -1,5 +1,6 @@
 require 'test_helper'
-require Rails.root.to_s + '/lib/menu.rb'
+require 'rubal_core/menu'
+#require Rails.root.to_s + '/lib/menu.rb'
 
 include RubalCore
 

@@ -1,13 +1,13 @@
 require 'test_helper'
-require Rails.root.to_s + '/lib/assets/settings'
+require 'rubal_core/settings'
 
 include RubalCore
 # Запуск тестов (набирать из корня проекта): ruby -Itest test/unit/settings_test.rb
 
 class PostTest < ActiveSupport::TestCase
 
-  TestSettingsFile = Rails.root.to_s + '/test/unit/settings_test_db.rb'
-  TestSettingsSavedFile = Rails.root.to_s + '/test/unit/settings_test_db_saved.rb'
+  TestSettingsFile = 'test/settings_test_db.rb'
+  TestSettingsSavedFile = 'test/settings_test_db_saved.rb'
 
   RequiredStr =<<file
 {:common=>

@@ -1,7 +1,7 @@
 module RubalCore
   require 'singleton'
   # Подключать меню не обязательно(!?)
-  require File.expand_path('../../config/init_menu', __FILE__)
+  require "rubal_core/init_menu"
   require "logger"
   #log = Logger.new(STDERR)
 

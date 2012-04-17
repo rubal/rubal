@@ -1,4 +1,6 @@
-require File.expand_path('../../../lib/menu', __FILE__)
+#require File.expand_path('../../../lib/menu', __FILE__)
+
+require 'rubal_core'
 
 include RubalCore
 

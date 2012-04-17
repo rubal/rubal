@@ -28,7 +28,7 @@ module RubalCore
     include Singleton
 
     # Settings file
-    Filename = Rails.root.to_s + '/lib/assets/settings_db.rb'
+    Filename = 'lib/rubal_core/settings_db.rb'
 
     def initialize # :nodoc:
       load
@@ -59,7 +59,8 @@ module RubalCore
       }
     rescue Errno::ENOENT
       puts "Settings file '#{filename}' not found"  # TODO: log about it
-      throw_error
+      raise
+      #throw_error
     end
 
     # Save changes to file
