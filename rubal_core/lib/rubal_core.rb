@@ -1,0 +1,2 @@
+module RubalCore
+end
