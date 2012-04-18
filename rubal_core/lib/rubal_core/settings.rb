@@ -1,6 +1,7 @@
 # Author::    Dmitriy Romanov  (mailto:romanov@rubal.ru)
 
 require 'singleton'
+require 'logger'
 
 module RubalCore
 
@@ -31,6 +32,7 @@ module RubalCore
     Filename = 'lib/rubal_core/settings_db.rb'
 
     def initialize # :nodoc:
+      @logger = Logger.new STDERR
       load
     end
 
@@ -58,9 +60,8 @@ module RubalCore
         add_category SettingsCategory.new category_name, category_data
       }
     rescue Errno::ENOENT
-      puts "Settings file '#{filename}' not found"  # TODO: log about it
+      @logger.fatal "Settings file '#{filename}' not found"
       raise
-      #throw_error
     end
 
     # Save changes to file
@@ -70,8 +71,8 @@ module RubalCore
         file.print self.to_s
       }
     rescue
-      puts "Cannot save settings to file '#{filename}'"  # TODO: log about it
-      throw_error
+      @logger.fatal "Cannot save settings to file '#{filename}'"
+      raise
     end
     alias save flush
 
