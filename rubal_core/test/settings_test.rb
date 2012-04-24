@@ -55,18 +55,13 @@ file
 
     assert :test_category==settings[:test_category].name, "attr_reader :name"
 
-
-    begin
+    assert_raise( NoMethodError, "Adding param to nonexistent category" ) {
       settings[:not_added_category][:test_param] = 1488
-      assert false, "Adding param to nonexistent category"
-    rescue Exception
-    end
+    }
 
-    begin
+    assert_raise( TypeError, "Category must be SettingsCategory instance" ) {
       settings.add_category 'Non_SettingsCategory_instance'
-      assert false, "Category must be SettingsCategory instance"
-    rescue TypeError
-    end
+    }
   end
 
   test "remove category" do
