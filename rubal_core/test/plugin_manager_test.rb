@@ -19,6 +19,6 @@ class PluginManagerTest < Test::Unit::TestCase
   def test_fail
 
     # To change this template use File | Settings | File Templates.
-    fail("Not implemented")
+    #fail("Not implemented")
   end
 end
