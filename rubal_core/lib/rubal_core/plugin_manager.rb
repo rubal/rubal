@@ -1,5 +1,8 @@
+require 'singleton'
+
 class PluginManager
-  require 'singleton'
+  include Singleton
+
   module AdminExtend
 
   end
@@ -15,8 +18,8 @@ class PluginManager
   end
   # добавляем хэш
   def add_hash= hash
-      @routes.push(hash)
-    return mn
+    @routes.push(hash)
+    #return mn
   end
   def initialize
     @routes = Array.new([{"admin/c1/:id" => "admin#call_me_baybe"}, {"admin/i" => "admin#index"}])
