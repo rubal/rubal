@@ -38,5 +38,5 @@ gem 'jquery-rails'
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
 gem 'rubal_core', path: 'rubal_core'
-gem 'rubal_test_plugin', path: 'RubalTestPlugin'
+#gem 'rubal_test_plugin', path: 'RubalTestPlugin'
 gem 'rubal_logo', path: 'rubal_logo'
