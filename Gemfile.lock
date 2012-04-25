@@ -10,6 +10,12 @@ PATH
     rubal_core (0.0.1)
       rails (~> 3.2.1)
 
+PATH
+  remote: rubal_logo
+  specs:
+    rubal_logo (0.0.1)
+      rails (~> 3.2.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -119,6 +125,7 @@ DEPENDENCIES
   jquery-rails
   rails (= 3.2.1)
   rubal_core!
+  rubal_logo!
   rubal_test_plugin!
   sass-rails (~> 3.2.3)
   sqlite3

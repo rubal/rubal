@@ -39,3 +39,4 @@ gem 'jquery-rails'
 
 gem 'rubal_core', path: 'rubal_core'
 gem 'rubal_test_plugin', path: 'RubalTestPlugin'
+gem 'rubal_logo', path: 'rubal_logo'
