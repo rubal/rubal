@@ -37,6 +37,5 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
-group :rubal do
-  gem 'rubal_core', path: 'rubal_core'
-end
+gem 'rubal_core', path: 'rubal_core'
+gem 'rubal_test_plugin', path: 'RubalTestPlugin'

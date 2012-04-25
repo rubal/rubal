@@ -18,11 +18,11 @@ module RubalCore
       @placeholders = {}
     end
 
-    def AddAdminController(given_PluginNameAdminControllerExtend)
+    def add_admin_controller(given_PluginNameAdminControllerExtend)
       AdminExtend.send(:include, given_PluginNameAdminControllerExtend)
     end
 
-    def AddPageController(given_PluginNamePageControllerExtend)
+    def add_page_controller(given_PluginNamePageControllerExtend)
       PageExtend.send(:include, given_PluginNamePageControllerExtend)
     end
 

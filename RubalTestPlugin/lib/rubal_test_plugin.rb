@@ -1,6 +1,8 @@
 # Тествоый пример плагина
 #p "test_plugin loaded"
-require "rubal_core/plugin_manager.rb"
+require "rubal_core/plugin_manager"
+
+include RubalCore
 
 # код плагина
 module RubalTestPlugin
@@ -21,14 +23,40 @@ module RubalTestPlugin
         {"admin/i" => "admin#index"}
     ]
   end
+
+  def get_my_placeholders_btch
+    [
+        {
+            :category=>'test',
+            :param=>'hello',
+            :value=>'Hello from Rubal developers'
+        },
+        {
+            :category=>'test',
+            :param=>'title',
+            :value=>'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+        }
+    ]
+  end
+
   # функция для вызова метода модуля
   # e.g. RubalTestPlugin.get_my_routes_please
   module_function :get_my_routes_please
+  module_function :get_my_placeholders_btch
 end
 
+plugin_manager = PluginManager.instance
+
 # добавление в AdminController
-PluginManager.instance.add_admin_controller RubalTestPlugin
+plugin_manager.add_admin_controller RubalTestPlugin
 # добавление в PageController
-PluginManager.instance.add_page_controller  RubalTestPlugin
+plugin_manager.add_page_controller  RubalTestPlugin
 # собираем пути из плагинов
-PluginManager.instance.add_hash_array_routes RubalTestPlugin.get_my_routes_please
+RubalTestPlugin.get_my_routes_please.each{ |route|
+  plugin_manager.add_route route
+}
+
+RubalTestPlugin.get_my_placeholders_btch.each{ |placeholder|
+  plugin_manager.add_placeholder( placeholder[:category], placeholder[:param], placeholder[:value] )
+}
+
