@@ -4,7 +4,7 @@ module RubalCore
   class PluginManager
     include Singleton
 
-    attr_reader :routes,:placeholders
+    attr_reader :routes,:placeholders,:plugins
 
     module AdminExtend
 
@@ -40,6 +40,11 @@ module RubalCore
       raise TypeError unless (category.instance_of? String) && (param.instance_of? String) && (value.instance_of? String)
       @placeholders[category]={} unless @placeholders.has_key? category
       @placeholders[category][param] = value
+    end
+
+    def add_plugin plugin_instance
+      @plugins=[] if @plugins.nil?
+      @plugins.push plugin_instance
     end
 
   end
