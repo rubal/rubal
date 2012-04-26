@@ -18,12 +18,12 @@ module RubalCore
       @placeholders = {}
     end
 
-    def add_admin_controller(given_PluginNameAdminControllerExtend)
-      AdminExtend.send(:include, given_PluginNameAdminControllerExtend)
+    def add_admin_controller given_module
+      AdminExtend.send :include, given_module
     end
 
-    def add_page_controller(given_PluginNamePageControllerExtend)
-      PageExtend.send(:include, given_PluginNamePageControllerExtend)
+    def add_page_controller given_module
+      PageExtend.send :include, given_module
     end
 
     # Add route to CMS
