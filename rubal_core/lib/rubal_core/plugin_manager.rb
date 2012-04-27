@@ -1,5 +1,4 @@
 require 'singleton'
-
 module RubalCore
   class PluginManager
     include Singleton
@@ -20,6 +19,7 @@ module RubalCore
 
     def add_admin_controller given_module
       AdminExtend.send :include, given_module
+
     end
 
     def add_page_controller given_module
@@ -48,7 +48,7 @@ module RubalCore
     def add_plugin plugin_instance
       @plugins=[] if @plugins.nil?
       @plugins.push plugin_instance
+      #add_admin_controller plugin_instance::Methods
     end
-
   end
 end

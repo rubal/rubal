@@ -6,6 +6,7 @@ Rubal::Application.routes.draw do
   get "admin/test_controller"
   get "admin/plugin_view"
   get "admin/admin"
+  get "admin/r"
 
 
   # получаем массив путей, установленных плагинами
@@ -15,7 +16,9 @@ Rubal::Application.routes.draw do
   routes_arr.each { |el|
     match el
   }
-  match "admin/rubal_test_plugin" => "admin#say_hello_admin"
+
+  #match "admin/rubal_test_plugin/:id" => "admin#say_hello_admin"
+  #match "admin/r" => "admin#r"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

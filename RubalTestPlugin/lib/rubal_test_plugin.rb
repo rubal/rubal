@@ -6,16 +6,18 @@ require "rubal_core/plugin"
 module RubalTestPlugin
   class RubalTestPlugin < RubalCore::Plugin
     module Methods
-
       # действия плагина
       def say_hello_admin
+        @out_mm = MainMenu.instance
         #render :inline =>  "<h1>hello world :id=#{params[:id]} (added by AddAdminController )</h1>"
-        render :file => 'plugin_view.erb', :layout => 'application.html.erb'
+        #render :file => 'plugin_view.erb', :layout => 'application.html.erb'
+        render :file => Rails.root + 'RubalTestPlugin\lib\views\view.erb', :layout => 'application.html.erb'
+        p Rails.root + 'RubalTestPlugin\lib\views\view.erb'
       end
+      #:say_hello_admin
       def say_hello_page
         render :inline =>  "<h1>hello world :id=#{params[:id]} (added by AddPageController  )</h1>"
       end
-
     end
 
     def initialize
@@ -36,12 +38,13 @@ module RubalTestPlugin
               :value=>'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
           }
       ]
-
       @module = Methods
       super
     end
-
   end
 end
-
+p 'ruabl_test_plugin loaded'
 RubalCore::PluginManager.instance.add_plugin RubalTestPlugin::RubalTestPlugin.new
+RubalCore::PluginManager.instance.add_admin_controller RubalTestPlugin::RubalTestPlugin::Methods
+p RubalCore::PluginManager::AdminExtend.instance_methods
+#p RubalCore::PluginManager::AdminController.instance_methods
