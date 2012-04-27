@@ -16,6 +16,7 @@ Rubal::Application.routes.draw do
   }
   match 'page/:id' => 'page#index'
 
+
   #match "admin/rubal_test_plugin/:id" => "admin#say_hello_admin"
   #match "admin/r" => "admin#r"
 

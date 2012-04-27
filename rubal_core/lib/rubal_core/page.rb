@@ -27,3 +27,5 @@ end
 class PagePluginUsingTable < ActiveRecord::Base
   #pid, plugin_name, plugin_params, plugin_returned_html
 end
+
+
