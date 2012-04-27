@@ -4,34 +4,39 @@ module RubalCore
     include Singleton
 
     attr_reader :routes,:placeholders,:plugins
-
+    # Действия плагинов для админки
     module AdminExtend
 
     end
+    # Действия плагинов для страниц
     module PageExtend
 
     end
-
+    # Инициализируем пути и плейсхолдеры
     def initialize
-      @routes = Array.new([{"admin/c1/:id" => "admin#call_me_baybe"}, {"admin/i" => "admin#index"}])
+      @routes = Array.new([{"admin/call/:id" => "admin#call_me_baybe"}, {"admin/i" => "admin#index"}])
       @placeholders = {}
     end
 
+    # Добавление действий плагинов в AdminController.
+    # Получает модуль в качестве параметра.
     def add_admin_controller given_module
       AdminExtend.send :include, given_module
 
     end
-
+    # Добавление действий плагинов в PageController.
+    # Получает модуль в качестве параметра.
     def add_page_controller given_module
       PageExtend.send :include, given_module
     end
 
     # Add route to CMS
     # * route  #TODO: add doc
+    # Добавляем пути всех плагинов в плагинменеджер
     def add_route route
       @routes.push(route)
     end
-
+    # Возвращает массив путей всех плагинов
     def get_hash_array_routes
       @routes
     end
@@ -48,7 +53,8 @@ module RubalCore
     def add_plugin plugin_instance
       @plugins=[] if @plugins.nil?
       @plugins.push plugin_instance
-      #add_admin_controller plugin_instance::Methods
+      # todo: добавление модуля плагина здесь(при добавлении плагина)
+      #self.add_admin_controller plugin_instance::Methods
     end
   end
 end

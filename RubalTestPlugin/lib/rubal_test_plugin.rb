@@ -46,5 +46,5 @@ end
 p 'ruabl_test_plugin loaded'
 RubalCore::PluginManager.instance.add_plugin RubalTestPlugin::RubalTestPlugin.new
 RubalCore::PluginManager.instance.add_admin_controller RubalTestPlugin::RubalTestPlugin::Methods
-p RubalCore::PluginManager::AdminExtend.instance_methods
+#p RubalCore::PluginManager::AdminExtend.instance_methods
 #p RubalCore::PluginManager::AdminController.instance_methods
