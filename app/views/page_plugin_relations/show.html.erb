@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Pid:</b>
+  <%= @page_plugin_relation.pid %>
+</p>
+
+<p>
+  <b>Plugin name:</b>
+  <%= @page_plugin_relation.plugin_name %>
+</p>
+
+<p>
+  <b>Plugin params:</b>
+  <%= @page_plugin_relation.plugin_params %>
+</p>
+
+<p>
+  <b>Plugin returned html:</b>
+  <%= @page_plugin_relation.plugin_returned_html %>
+</p>
+
+
+<%= link_to 'Edit', edit_page_plugin_relation_path(@page_plugin_relation) %> |
+<%= link_to 'Back', page_plugin_relations_path %>

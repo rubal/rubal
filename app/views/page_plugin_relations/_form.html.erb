@@ -1,0 +1,33 @@
+<%= form_for(@page_plugin_relation) do |f| %>
+  <% if @page_plugin_relation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@page_plugin_relation.errors.count, "error") %> prohibited this page_plugin_relation from being saved:</h2>
+
+      <ul>
+      <% @page_plugin_relation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :pid %><br />
+    <%= f.number_field :pid %>
+  </div>
+  <div class="field">
+    <%= f.label :plugin_name %><br />
+    <%= f.text_field :plugin_name %>
+  </div>
+  <div class="field">
+    <%= f.label :plugin_params %><br />
+    <%= f.text_field :plugin_params %>
+  </div>
+  <div class="field">
+    <%= f.label :plugin_returned_html %><br />
+    <%= f.text_field :plugin_returned_html %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

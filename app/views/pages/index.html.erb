@@ -1,0 +1,39 @@
+<h1>Listing pages</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Erb path</th>
+    <th>Vhtml path</th>
+    <th>Page url</th>
+    <th>Used plugins</th>
+    <th>Page title</th>
+    <th>Html returned by plugins</th>
+    <th>Parent page</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @pages.each do |page| %>
+  <tr>
+    <td><%= page.id %></td>
+    <td><%= page.erb_path %></td>
+    <td><%= page.vhtml_path %></td>
+    <td><%= page.page_url %></td>
+    <td><%= page.used_plugins %></td>
+    <td><%= page.page_title %></td>
+    <td><%= page.html_returned_by_plugins %></td>
+    <td><%= page.parent_page %></td>
+    <td><%= page.description %></td>
+    <td><%= link_to 'Show', page %></td>
+    <td><%= link_to 'Edit', edit_page_path(page) %></td>
+    <td><%= link_to 'Destroy', page, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Page', new_page_path %>

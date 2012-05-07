@@ -56,5 +56,19 @@ module RubalCore
       # todo: добавление модуля плагина здесь(при добавлении плагина)
       #self.add_admin_controller plugin_instance::Methods
     end
+    # возвращаем значение плейсхолдера по указанным категории и параметру
+    def get_placeholder_value category, param
+      # проверка переданных параметров
+      if category.nil? || param.nil?
+        return
+      end
+      # возвращаем значение плейсхолдера по указанным категории и параметру (если оно не nil)
+      @placeholders[category][param] unless @placeholders[category][param].nil?
+      #@placeholders.each{|placeholder|
+      #  if placeholder[:category] == category && placeholder[:param] == param
+      #    placeholder[:value]
+      #  end
+      #}
+    end
   end
 end

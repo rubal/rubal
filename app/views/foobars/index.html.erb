@@ -1,0 +1,25 @@
+<h1>Listing foobars</h1>
+
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Title</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @foobars.each do |foobar| %>
+  <tr>
+    <td><%= foobar.id %></td>
+    <td><%= foobar.title %></td>
+    <td><%= link_to 'Show', foobar %></td>
+    <td><%= link_to 'Edit', edit_foobar_path(foobar) %></td>
+    <td><%= link_to 'Destroy', foobar, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Foobar', new_foobar_path %>

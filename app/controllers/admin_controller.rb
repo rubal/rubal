@@ -12,5 +12,9 @@ class AdminController < ApplicationController
     # Создаем главное меню (Единственное!)
     # Выводим главное меню
     @out_mm = MainMenu.instance
+
+    t = PagePluginUsingTable.new
+
+
   end
 end

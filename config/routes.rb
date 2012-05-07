@@ -2,6 +2,16 @@
 #require 'rubal_core/lib/rubal_core/plugin_manager'
 
 Rubal::Application.routes.draw do
+  resources :pages
+
+  resources :pages
+
+  resources :foobars
+
+  resources :foos
+
+  resources :page_plugin_relations
+
   get "admin/index"
   get "admin/test_controller"
   get "admin/plugin_view"
@@ -10,12 +20,16 @@ Rubal::Application.routes.draw do
   # получаем массив путей, установленных плагинами
   #routes_arr = PluginManager.instance.get_hash_array_routes
 
-  routes_arr = PluginManager.instance.routes
-  routes_arr.each { |el|
-    match el
-  }
-  match 'page/:id' => 'page#index'
+  #routes_arr = PluginManager.instance.routes
+  #routes_arr.each { |el|
+  #  match el
+  #}
+  match 'page_plugin_relations/:id' => 'page_plugin_relations#index'
+  match 'pages/' => 'pages#index'
+  match 'foos/' => 'foos#index'
+  match 'pageediting' => 'page_editing#index'
 
+  #match 'page/' => 'page_plugin_relations#index'
 
   #match "admin/rubal_test_plugin/:id" => "admin#say_hello_admin"
   #match "admin/r" => "admin#r"

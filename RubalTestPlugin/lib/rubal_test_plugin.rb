@@ -41,6 +41,13 @@ module RubalTestPlugin
       @module = Methods
       super
     end
+    #def get_placeholder_value(category, param)
+    #  @placeholders.each{|placeholder|
+    #    if placeholder[:category] == category && placeholder[:param] == param
+    #      placeholder[:value]
+    #    end
+    #  }
+    #end
   end
 end
 p 'ruabl_test_plugin loaded'

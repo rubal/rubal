@@ -1,0 +1,29 @@
+<h1>Listing page_plugin_relations</h1>
+
+<table>
+  <tr>
+    <th>Pid</th>
+    <th>Plugin name</th>
+    <th>Plugin params</th>
+    <th>Plugin returned html</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @files.each do |f| %>
+      <tr>
+        <td><%= f.pid %></td>
+        <td><%= f.plugin_name %></td>
+        <td><%= f.plugin_params %></td>
+        <td><%= f.plugin_returned_html %></td>
+        <td><%= link_to 'Show', f %></td>
+        <td><%= link_to 'Edit', edit_page_plugin_relation_path(f) %></td>
+        <td><%= link_to 'Destroy', f, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+  <% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Page plugin relation', new_page_plugin_relation_path %>

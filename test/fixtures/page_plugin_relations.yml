@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  pid: 1
+  plugin_name: MyString
+  plugin_params: MyString
+  plugin_returned_html: MyString
+
+two:
+  pid: 1
+  plugin_name: MyString
+  plugin_params: MyString
+  plugin_returned_html: MyString
