@@ -1,6 +1,6 @@
 require 'singleton'
 require 'logger'
-require 'rubal_core/plugin_manager'
+require  'rubal_core/plugin_manager'
 
 module RubalCore
   class PageProcessor
@@ -9,6 +9,7 @@ module RubalCore
     def initialize
       @logger = Logger.new STDERR
       @i = 0
+      @pid = 0
       #@html_replacements = []
       @placeholder_plugin_params_html_replacements = Hash.new
     end
@@ -23,10 +24,16 @@ module RubalCore
     def plugin_params_replacements_cache plugin_name, plugin_param
       if @placeholder_plugin_params_html_replacements["#{plugin_name}=#{plugin_param}"].nil?
         @placeholder_plugin_params_html_replacements["#{plugin_name}=#{plugin_param}"] = PluginManager.instance.get_placeholder_value plugin_name, plugin_param
+        # сохраняем запись в бд/связь плагинов и страниц
+        ppr = PagePluginRelation.new
+        ppr.pid= @pid
+        ppr.plugin_name= plugin_name
+        ppr.plugin_params= plugin_param
+        ppr.plugin_returned_html= @placeholder_plugin_params_html_replacements["#{plugin_name}=#{plugin_param}"]
+        ppr.save
       else
         @placeholder_plugin_params_html_replacements["#{plugin_name}=#{plugin_param}"]
       end
-
     end
 
     # Replace placeholders in text to values from values_hash
@@ -66,6 +73,15 @@ module RubalCore
     end
 
     def process page_path, target_path
+      page_path = Rails.root.to_s + '/' + page_path
+      target_path = Rails.root.to_s + '/' + target_path
+      #page = Thepage.new
+      #page = Thepage.find_by_erb_path target_path
+      #if page.nil?
+      #  return
+      #end
+      #@pid = page.id
+      @pid = 7
       text = File.read page_path
       # !обработка ВСЕХ плейсхолдеров для каждой страницы!
       values_hash = PluginManager.instance.placeholders
@@ -73,12 +89,12 @@ module RubalCore
       File.open(target_path,"w"){|file|
         file.print result
       }
-    rescue Errno::ENOENT
-      @logger.fatal "Cannot process file '#{page_path}'"
-      raise
-    rescue
-      @logger.fatal "Cannot target file '#{target_path}'"
-      raise
+    #rescue Errno::ENOENT
+    #  @logger.fatal "Cannot process file '#{page_path}'"
+    #  raise
+    #rescue
+    #  @logger.fatal "Cannot target file '#{target_path}'"
+    #  raise
     end
     def get_plugin_names_and_params
       @plugin_names_and_params

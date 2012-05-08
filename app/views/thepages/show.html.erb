@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @thepage.id %>
+</p>
+
+<p>
+  <b>Erb path:</b>
+  <%= @thepage.erb_path %>
+</p>
+
+<p>
+  <b>Vhtml path:</b>
+  <%= @thepage.vhtml_path %>
+</p>
+
+<p>
+  <b>Page url:</b>
+  <%= @thepage.page_url %>
+</p>
+
+<p>
+  <b>Used plugins:</b>
+  <%= @thepage.used_plugins %>
+</p>
+
+<p>
+  <b>Page title:</b>
+  <%= @thepage.page_title %>
+</p>
+
+<p>
+  <b>Html returned by plugins:</b>
+  <%= @thepage.html_returned_by_plugins %>
+</p>
+
+<p>
+  <b>Parent page:</b>
+  <%= @thepage.parent_page %>
+</p>
+
+
+<%= link_to 'Edit', edit_thepage_path(@thepage) %> |
+<%= link_to 'Back', thepages_path %>

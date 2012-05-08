@@ -1,6 +1,6 @@
-class CreatePages < ActiveRecord::Migration
+class CreateThepages < ActiveRecord::Migration
   def change
-    create_table :pages do |t|
+    create_table :thepages do |t|
       t.integer :id
       t.string :erb_path
       t.string :vhtml_path
@@ -9,7 +9,6 @@ class CreatePages < ActiveRecord::Migration
       t.string :page_title
       t.string :html_returned_by_plugins
       t.integer :parent_page
-      t.string :description
 
       t.timestamps
     end

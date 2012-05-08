@@ -1,0 +1,2 @@
+module ThepagesHelper
+end

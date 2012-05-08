@@ -1,0 +1,31 @@
+<h1>Editing thepage</h1>
+
+<% @thepage = Thepage.find(params[:id]) %>
+<%=  @thepage.vhtml_path %>
+
+<%= form_for(@thepage) do |f| %>
+    <% if @thepage.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@thepage.errors.count, "error") %> prohibited this thepage from being saved:</h2>
+
+          <ul>
+            <% @thepage.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :vhtml_path %><br />
+      <%= text_area_tag :reason, @vhtml_file_content, :size => "70x100" %>
+
+    </div>
+<% end %>
+
+<%= button_to "SaveVhtml", { :controller => 'thepages',
+                                :id => 1},
+                                :method => :save_vhtml %>
+
+<%= link_to 'Show', @thepage %>
+<%= link_to 'Back', thepages_path %>

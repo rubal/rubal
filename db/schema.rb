@@ -13,18 +13,18 @@
 
 ActiveRecord::Schema.define(:version => 20120428110618) do
 
-  create_table "foobars", :force => true do |t|
-    t.string   "title"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "foos", :force => true do |t|
-    t.integer  "bar"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
+  #create_table "foobars", :force => true do |t|
+  #  t.string   "title"
+  #  t.datetime "created_at", :null => false
+  #  t.datetime "updated_at", :null => false
+  #end
+  #
+  #create_table "foos", :force => true do |t|
+  #  t.integer  "bar"
+  #  t.datetime "created_at", :null => false
+  #  t.datetime "updated_at", :null => false
+  #end
+  #
   create_table "page_plugin_relations", :force => true do |t|
     t.integer  "pid"
     t.string   "plugin_name"
@@ -33,20 +33,32 @@ ActiveRecord::Schema.define(:version => 20120428110618) do
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
   end
+  #
+  #create_table "pages", :force => true do |t|
+  #  t.string   "erb_path"
+  #  t.string   "vhtml_path"
+  #  t.string   "page_url"
+  #  t.string   "used_plugins"
+  #  t.string   "page_title"
+  #  t.string   "html_returned_by_plugins"
+  #  t.integer  "parent_page"
+  #  t.datetime "created_at",               :null => false
+  #  t.datetime "updated_at",               :null => false
+  #end
+  #
+  #create_table "superpages", :force => true do |t|
+  #  t.string   "erb_path"
+  #  t.string   "vhtml_path"
+  #  t.string   "page_url"
+  #  t.string   "used_plugins"
+  #  t.string   "page_title"
+  #  t.string   "html_returned_by_plugins"
+  #  t.integer  "parent_page"
+  #  t.datetime "created_at",               :null => false
+  #  t.datetime "updated_at",               :null => false
+  #end
 
-  create_table "pages", :force => true do |t|
-    t.string   "erb_path"
-    t.string   "vhtml_path"
-    t.string   "page_url"
-    t.string   "used_plugins"
-    t.string   "page_title"
-    t.string   "html_returned_by_plugins"
-    t.integer  "parent_page"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
-  end
-
-  create_table "superpages", :force => true do |t|
+  create_table "thepages", :force => true do |t|
     t.string   "erb_path"
     t.string   "vhtml_path"
     t.string   "page_url"

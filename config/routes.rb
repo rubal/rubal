@@ -2,13 +2,10 @@
 #require 'rubal_core/lib/rubal_core/plugin_manager'
 
 Rubal::Application.routes.draw do
-  resources :pages
+
+  resources :thepages
 
   resources :pages
-
-  resources :foobars
-
-  resources :foos
 
   resources :page_plugin_relations
 
@@ -26,9 +23,9 @@ Rubal::Application.routes.draw do
   #}
   match 'page_plugin_relations/:id' => 'page_plugin_relations#index'
   match 'pages/' => 'pages#index'
-  match 'foos/' => 'foos#index'
   match 'pageediting' => 'page_editing#index'
-
+  match 'thepages/' => 'thepages#index'
+  match 'thepages/vhtml_edit/:id' => 'thepages#vhtml_edit'
   #match 'page/' => 'page_plugin_relations#index'
 
   #match "admin/rubal_test_plugin/:id" => "admin#say_hello_admin"

@@ -1,10 +1,10 @@
-<%= form_for(@page) do |f| %>
-  <% if @page.errors.any? %>
+<%= form_for(@thepage) do |f| %>
+  <% if @thepage.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@page.errors.count, "error") %> prohibited this page from being saved:</h2>
+      <h2><%= pluralize(@thepage.errors.count, "error") %> prohibited this thepage from being saved:</h2>
 
       <ul>
-      <% @page.errors.full_messages.each do |msg| %>
+      <% @thepage.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
