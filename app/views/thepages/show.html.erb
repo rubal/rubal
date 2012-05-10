@@ -13,6 +13,9 @@
 <p>
   <b>Vhtml path:</b>
   <%= @thepage.vhtml_path %>
+
+  <b>Редактировать vhtml-файл:</b>
+  <%=  link_to "Редактировать", "vhtml_edit/#{@thepage.id}" %>
 </p>
 
 <p>

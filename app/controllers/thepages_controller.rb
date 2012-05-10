@@ -2,6 +2,10 @@ require Rails.root.to_s + '/rubal_core/lib/rubal_core/page_processor'
 class ThepagesController < ApplicationController
   # GET /thepages
   # GET /thepages.json
+  def initialize
+    @count_lines = 50
+  end
+
   def index
     @thepages = Thepage.all
 
@@ -81,23 +85,52 @@ class ThepagesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  def vhtml_edit
+  def update_edit_field
     @thepage = Thepage.find(params[:id])
-    file = File.open(@thepage.vhtml_path, 'r+')
-    @vhtml_file_content = file.inject{|content, line|
-      content += line
-    }
-    p @vhtml_file_content
+    @vhtml_file_content = File.open(@thepage.vhtml_path, 'r'){|file| file.read}
+  end
+  def vhtml_edit
+    update_edit_field
+    save_vhtml
+
+
+    #session[:return_to] ||= request.referer
+    #redirect_to session[:return_to]
+
+    #p 'iiiiiiiii'
+    #p params[:id]
+    #@thepage = Thepage.find(params[:id])
+    ##@count_lines = 0
+    #@vhtml_file_content = File.open(@thepage.vhtml_path, 'r'){|file| file.read}
+    ##file = File.open(@thepage.vhtml_path, 'r')
+    ##content = ''
+    ##@vhtml_file_content = file.each{|line|
+    ##  content += line
+    ##  #@count_lines += 1
+    ##}
+    ##@vhtml_file_content = content
+    #p @vhtml_file_content
+    #p 'sssssssss'
+    #save = params[:save]
+    #p save
+
+
     #@vhtml_file_content = @thepage.vhtml_path
   end
   def save_vhtml
-    updated_file_content = params[:reason]
-    file = File.open(@thepage.vhtml_path, 'r+')
-    file.each{|line|
-      line = updated_file_content
-    }
-    p '--------------------------------'
-    p updated_file_content
+    @new_vhtml_file_content = params[:message]
+    unless @new_vhtml_file_content.nil?
+      File.open(@thepage.vhtml_path, 'w'){|file|
+        file.write @new_vhtml_file_content
+      }
+    end
+    #updated_file_content = params[:message]
+    #file = File.open(@thepage.vhtml_path, 'r+')
+    #file.each{|line|
+    #  line = updated_file_content
+    #}
+    #p '--------------------------------'
+    #p updated_file_content
     #@thepage = Thepage.find(params[:id])
     #respond_to do |format|
     #  if @thepage.update_attributes(params[:thepage])
