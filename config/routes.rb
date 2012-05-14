@@ -3,11 +3,15 @@
 
 Rubal::Application.routes.draw do
 
+  resources :pages
+
   resources :thepages
 
   resources :pages
 
   resources :page_plugin_relations
+
+
 
   get "admin/index"
   get "admin/test_controller"
@@ -21,11 +25,15 @@ Rubal::Application.routes.draw do
   #routes_arr.each { |el|
   #  match el
   #}
+
   match 'page_plugin_relations/:id' => 'page_plugin_relations#index'
   match 'pages/' => 'pages#index'
   match 'pageediting' => 'page_editing#index'
   match 'thepages/' => 'thepages#index'
   match 'thepages/vhtml_edit/:id' => 'thepages#vhtml_edit'
+  mount Blorgh::Engine, :at => "/blog"
+
+
   #match 'page/' => 'page_plugin_relations#index'
 
   #match "admin/rubal_test_plugin/:id" => "admin#say_hello_admin"

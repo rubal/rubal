@@ -7,7 +7,6 @@ class CreatePages < ActiveRecord::Migration
       t.string :page_url
       t.string :used_plugins
       t.string :page_title
-      t.string :html_returned_by_plugins
       t.integer :parent_page
 
       t.timestamps

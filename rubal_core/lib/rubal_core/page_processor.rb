@@ -22,18 +22,24 @@ module RubalCore
     #если plugin_name и param не были использованы, запоминает их html в массив подстановок и возвращает его
     #иначе - возвращает их html
     def plugin_params_replacements_cache plugin_name, plugin_param
-      if @placeholder_plugin_params_html_replacements["#{plugin_name}=#{plugin_param}"].nil?
-        @placeholder_plugin_params_html_replacements["#{plugin_name}=#{plugin_param}"] = PluginManager.instance.get_placeholder_value plugin_name, plugin_param
+      if @placeholder_plugin_params_html_replacements["<%= #{plugin_name}.#{plugin_param} %>"].nil?
+        #@placeholder_plugin_params_html_replacements["#{plugin_name}=#{plugin_param}"] = PluginManager.instance.get_placeholder_value plugin_name, plugin_param
+        @placeholder_plugin_params_html_replacements["<%= #{plugin_name}.#{plugin_param} %>"] = "<%= #{plugin_name}.#{plugin_param} %>"
         # сохраняем запись в бд/связь плагинов и страниц
         ppr = PagePluginRelation.new
         ppr.pid= @pid
         ppr.plugin_name= plugin_name
         ppr.plugin_params= plugin_param
-        ppr.plugin_returned_html= @placeholder_plugin_params_html_replacements["#{plugin_name}=#{plugin_param}"]
+        # путь к erb-вьюхе engine'а
+        #ppr.plugin_returned_html= @placeholder_plugin_params_html_replacements["#{plugin_name}=#{plugin_param}"]
+        ppr.plugin_returned_html= @placeholder_plugin_params_html_replacements["<%= #{plugin_name}.#{plugin_param} %>"]
         ppr.save
-      else
-        @placeholder_plugin_params_html_replacements["#{plugin_name}=#{plugin_param}"]
+        #return @placeholder_plugin_params_html_replacements["<%= #{plugin_name}.#{plugin_param} %>"]
+      #else
+      #  #@placeholder_plugin_params_html_replacements["#{plugin_name}=#{plugin_param}"]
+      #  return @placeholder_plugin_params_html_replacements["<%= #{plugin_name}.#{plugin_param} %>"]
       end
+      return @placeholder_plugin_params_html_replacements["<%= #{plugin_name}.#{plugin_param} %>"]
     end
 
     # Replace placeholders in text to values from values_hash

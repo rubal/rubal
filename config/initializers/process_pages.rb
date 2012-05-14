@@ -10,7 +10,7 @@ Dir.foreach(PAGES_PATH) { |file_name|
   next unless file_name =~ /^*\.html$/
 
   page_path = PAGES_PATH + '/' + file_name
-  target_path = TARGETS_PATH + '/' + file_name.split(/^*\.html$/).first + '.erb' # TODO: говнокод, но работает
+  target_path = TARGETS_PATH + '/' + file_name.split(/^*\.html$/).first + '.html.erb' # TODO: говнокод, но работает
   #puts "#{page_path} => #{target_path}"
   page_processor.process page_path, target_path
 }

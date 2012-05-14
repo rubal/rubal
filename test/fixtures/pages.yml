@@ -7,7 +7,6 @@ one:
   page_url: MyString
   used_plugins: MyString
   page_title: MyString
-  html_returned_by_plugins: MyString
   parent_page: 1
 
 two:
@@ -17,5 +16,4 @@ two:
   page_url: MyString
   used_plugins: MyString
   page_title: MyString
-  html_returned_by_plugins: MyString
   parent_page: 1
