@@ -22,24 +22,27 @@ module RubalCore
     #если plugin_name и param не были использованы, запоминает их html в массив подстановок и возвращает его
     #иначе - возвращает их html
     def plugin_params_replacements_cache plugin_name, plugin_param
-      if @placeholder_plugin_params_html_replacements["<%= #{plugin_name}.#{plugin_param} %>"].nil?
+      # заменяем [[engine1:param1]] на строку в .erb "<%= render '/engine1/param1' %>"
+      # ключ, по которому хранится строка для подстановки
+      key = "<%= render '/#{plugin_name}/#{plugin_param}' %>"
+      # строка подстановки
+      value = "<%= render '/#{plugin_name}/#{plugin_param}' %>"
+      # если такой плейсхолдер ранее не встречался,
+      if @placeholder_plugin_params_html_replacements[key].nil?
         #@placeholder_plugin_params_html_replacements["#{plugin_name}=#{plugin_param}"] = PluginManager.instance.get_placeholder_value plugin_name, plugin_param
-        @placeholder_plugin_params_html_replacements["<%= #{plugin_name}.#{plugin_param} %>"] = "<%= #{plugin_name}.#{plugin_param} %>"
-        # сохраняем запись в бд/связь плагинов и страниц
+        @placeholder_plugin_params_html_replacements[key] = value
+        # создаем связь плагинов и страниц, сохраняем запись в бд
         ppr = PagePluginRelation.new
         ppr.pid= @pid
         ppr.plugin_name= plugin_name
         ppr.plugin_params= plugin_param
         # путь к erb-вьюхе engine'а
         #ppr.plugin_returned_html= @placeholder_plugin_params_html_replacements["#{plugin_name}=#{plugin_param}"]
-        ppr.plugin_returned_html= @placeholder_plugin_params_html_replacements["<%= #{plugin_name}.#{plugin_param} %>"]
+        ppr.plugin_returned_html= @placeholder_plugin_params_html_replacements[key]
         ppr.save
         #return @placeholder_plugin_params_html_replacements["<%= #{plugin_name}.#{plugin_param} %>"]
-      #else
-      #  #@placeholder_plugin_params_html_replacements["#{plugin_name}=#{plugin_param}"]
-      #  return @placeholder_plugin_params_html_replacements["<%= #{plugin_name}.#{plugin_param} %>"]
       end
-      return @placeholder_plugin_params_html_replacements["<%= #{plugin_name}.#{plugin_param} %>"]
+      return @placeholder_plugin_params_html_replacements[key]
     end
 
     # Replace placeholders in text to values from values_hash
@@ -53,10 +56,11 @@ module RubalCore
         plugin_name = $1
         # и его метод
         plugin_param = $2
-
-        p plugin_params_replacements_cache(plugin_name, plugin_param)
-        p '---'
         plugin_params_replacements_cache(plugin_name, plugin_param)
+
+
+        #p plugin_params_replacements_cache(plugin_name, plugin_param)
+        #p '---'
         #запоминаем использованные плагины и их параметры в хэш вида:
         # @plugin_names_and_params["plugin_name=plugin_param"] => <some html string>
         #@plugin_names_and_params["#{plugin_name}=#{plugin_param}"] = PluginManager.instance.get_placeholder_value plugin_name, plugin_param
@@ -77,17 +81,14 @@ module RubalCore
         #"<% #{@html_replacements[@i]} %>"
       }
     end
-
+    #
     def process page_path, target_path
       page_path = Rails.root.to_s + '/' + page_path
       target_path = Rails.root.to_s + '/' + target_path
-      #page = Thepage.new
-      #page = Thepage.find_by_erb_path target_path
-      #if page.nil?
-      #  return
-      #end
-      #@pid = page.id
-      @pid = 7
+      tmp_page = Thepage.find_last_by_erb_path(target_path)
+      unless tmp_page.nil?
+        @pid = tmp_page.id
+      end
       text = File.read page_path
       # !обработка ВСЕХ плейсхолдеров для каждой страницы!
       values_hash = PluginManager.instance.placeholders
@@ -95,6 +96,7 @@ module RubalCore
       File.open(target_path,"w"){|file|
         file.print result
       }
+
     #rescue Errno::ENOENT
     #  @logger.fatal "Cannot process file '#{page_path}'"
     #  raise

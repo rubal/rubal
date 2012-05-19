@@ -1,6 +1,5 @@
 module RubalCore
   require 'singleton'
-  # Подключать меню не обязательно(!?)
   require "rubal_core/init_menu"
   require "logger"
   #log = Logger.new(STDERR)
@@ -101,22 +100,6 @@ module RubalCore
         end
       }
       @children_arr = arr
-
-      #newarr = arr.each{|child|
-      #  #child != MenuNode
-      #  if child.class == MenuNode
-      #    child.set_parent= self
-      #  end
-      #  #else raise "Wrong type argument was given to set_children. MenuNode need."
-      #
-      #}
-      #@children_arr = arr
-
-      #newarr.each{|child|
-      #  child.set_parent= self
-      #}
-      #@children_arr = newarr
-
     end
 
     # Добавляет после указанного нода новый нод
@@ -217,7 +200,6 @@ module RubalCore
     # Удаляет текущий нод и возвращает массив без этого нода
     # !Невозможно удалить нод, который не является чьим-либо потомком!
     def del_node!
-
       par = self.get_parent
       # нет потомков
       if par == nil

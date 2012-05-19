@@ -7,15 +7,9 @@ Rubal::Application.routes.draw do
 
   resources :thepages
 
-  resources :pages
-
   resources :page_plugin_relations
 
-
-
   get "admin/index"
-  get "admin/test_controller"
-  get "admin/plugin_view"
   get "admin/admin"
 
   # получаем массив путей, установленных плагинами
@@ -27,11 +21,10 @@ Rubal::Application.routes.draw do
   #}
 
   match 'page_plugin_relations/:id' => 'page_plugin_relations#index'
-  match 'pages/' => 'pages#index'
   match 'pageediting' => 'page_editing#index'
   match 'thepages/' => 'thepages#index'
   match 'thepages/vhtml_edit/:id' => 'thepages#vhtml_edit'
-  mount Blorgh::Engine, :at => "/blog"
+  mount Blorgh::Engine, :at => "/blorgh"
 
 
   #match 'page/' => 'page_plugin_relations#index'

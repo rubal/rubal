@@ -1,14 +1,19 @@
 require Rails.root.to_s + '/rubal_core/lib/rubal_core/page_processor'
 class ThepagesController < ApplicationController
+
   # GET /thepages
   # GET /thepages.json
   def initialize
     @count_lines = 50
   end
-
+  # вывод .erb
+  def content_of_erb_rendered
+    erb_fuck = Rails.root.to_s + '/' + 'pages/erb/supertest.html.erb'
+    render erb_fuck
+    return
+  end
   def index
     @thepages = Thepage.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @thepages }
@@ -150,7 +155,6 @@ page.vhtml_path= Rails.root.to_s + '/pages/html/supertest.html'
 page.page_url= 'some/relative/page/url'
 #page.used_plugins=
 page.page_title= 'Title Page'
-#page.html_returned_by_plugins=
 #page.parent_page= id_parent_page/somepage.id
 page.save
 

@@ -7,7 +7,7 @@ PATH
 PATH
   remote: rubal_core
   specs:
-    rubal_core (0.0.1)
+    rubal_core (0.3)
       rails (~> 3.2.1)
 
 PATH

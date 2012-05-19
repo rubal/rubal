@@ -1,10 +1,15 @@
 module Blorgh
   class PostsController < ApplicationController
+    layout 'application'
+
+
     # GET /posts
     # GET /posts.json
+
     def index
       @posts = Post.all
-  
+      #erb_fuck = Rails.root.to_s + '/' + 'pages/erb/supertest.html.erb'
+      #render erb_fuck
       respond_to do |format|
         format.html # index.html.erb
         format.json { render json: @posts }
