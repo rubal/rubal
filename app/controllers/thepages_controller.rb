@@ -149,13 +149,13 @@ class ThepagesController < ApplicationController
   end
 end
 
-page = Thepage.new
-page.erb_path= Rails.root.to_s + '/pages/erb/supertest.erb'
-page.vhtml_path= Rails.root.to_s + '/pages/html/supertest.html'
-page.page_url= 'some/relative/page/url'
-#page.used_plugins=
-page.page_title= 'Title Page'
-#page.parent_page= id_parent_page/somepage.id
-page.save
-
-PageProcessor.process page.vhtml_path page.erb_path
+# создание новой страницы
+#page = Thepage.new
+#page.erb_path= Rails.root.to_s + '/pages/erb/supertest.erb'
+#page.vhtml_path= Rails.root.to_s + '/pages/html/supertest.html'
+#page.page_url= 'some/relative/page/url'
+##page.used_plugins=
+#page.page_title= 'Title Page'
+##page.parent_page= id_parent_page/somepage.id
+#page.save
+#PageProcessor.process page.vhtml_path page.erb_path

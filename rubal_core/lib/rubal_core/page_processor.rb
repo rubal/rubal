@@ -13,7 +13,15 @@ module RubalCore
       #@html_replacements = []
       @placeholder_plugin_params_html_replacements = Hash.new
     end
-
+    # записываем в хэш @placeholder_plugin_params_html_replacements значения из бд-> таблицы связей-> page_plugin_relations
+    def placeholders_filling
+      # создаем массив записей о связях плагинов и страниц
+      ppr_arr = Array.new(PagePluginRelation.all.count)
+      ppr_arr = PagePluginRelation.all
+      ppr_arr.each{|ppr|
+        @placeholder_plugin_params_html_replacements[ppr.plugin_returned_html] = ppr.plugin_returned_html
+      }
+    end
     # regexp 4 placeholder
     ReplacerTemplate = /\[\[([a-zA-Z0-9_\-]*):([a-zA-Z0-9_\-]*)\]\]/
     # e.g.: [plugin_name:func_name]
@@ -27,6 +35,7 @@ module RubalCore
       key = "<%= render '/#{plugin_name}/#{plugin_param}' %>"
       # строка подстановки
       value = "<%= render '/#{plugin_name}/#{plugin_param}' %>"
+      placeholders_filling
       # если такой плейсхолдер ранее не встречался,
       if @placeholder_plugin_params_html_replacements[key].nil?
         #@placeholder_plugin_params_html_replacements["#{plugin_name}=#{plugin_param}"] = PluginManager.instance.get_placeholder_value plugin_name, plugin_param
