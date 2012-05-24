@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Id:</b>
+  <%= @news.id %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @news.date %>
+</p>
+
+<p>
+  <b>Header:</b>
+  <%= @news.header %>
+</p>
+
+<p>
+  <b>Short text:</b>
+  <%= @news.short_text %>
+</p>
+
+<p>
+  <b>Full text:</b>
+  <%= @news.full_text %>
+</p>
+
+
+<%= link_to 'Edit', edit_news_path(@news) %> |
+<%= link_to 'Back', news_index_path %>
+
+<br />
+-----------------------------------------
+<p id="notice"><%= notice %></p>
+
+<p>
+  <h2><%= @news.header %></h2>
+</p>
+
+<p>
+  [
+  <b>Date:</b>
+  <%= @news.date %>
+  ]
+</p>
+
+<p>
+  <%= @news.short_text %>
+</p>
+<%= link_to 'Подробнее', news_index_path %>
+<br />
+-----------------------------------------
+<br />
+<p id="notice"><%= notice %></p>
+<p>
+<h2><%= @news.header %></h2>
+</p>
+
+<p>
+  [
+  <b>Date:</b>
+  <%= @news.date %>
+  ]
+</p>
+
+<p>
+  <%= @news.full_text%>
+</p>
+<br />

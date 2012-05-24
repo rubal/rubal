@@ -5,7 +5,7 @@ module Blorgh
 
     # GET /posts
     # GET /posts.json
-
+    before_filter :authenticate_user!
     def index
       @posts = Post.all
       #erb_fuck = Rails.root.to_s + '/' + 'pages/erb/supertest.html.erb'

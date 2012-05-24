@@ -7,7 +7,6 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
 <%= form_for("user", :url => user_session_path) do |f| %>
     <%= f.text_field :email %>
     <%= f.password_field :password %>
@@ -16,7 +15,6 @@
     <%= f.submit 'Sign in' %>
     <%= link_to "Forgot your password?", new_password_path('user') %>
 <% end %>
-
 <!--
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>

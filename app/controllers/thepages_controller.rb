@@ -4,7 +4,8 @@ class ThepagesController < ApplicationController
   # GET /thepages
   # GET /thepages.json
   def initialize
-    @count_lines = 50
+    # выводится страниц
+    #@count_lines = 50
   end
   # вывод .erb
   def content_of_erb_rendered

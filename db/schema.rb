@@ -57,6 +57,15 @@ ActiveRecord::Schema.define(:version => 20120428110618) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "news", :force => true do |t|
+    t.datetime "date"
+    t.string   "header"
+    t.text     "short_text"
+    t.text     "full_text"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "page_plugin_relations", :force => true do |t|
     t.integer  "pid"
     t.string   "plugin_name"

@@ -3,6 +3,8 @@
 
 Rubal::Application.routes.draw do
 
+  resources :news
+
   devise_for :admins
 
   devise_for :users
