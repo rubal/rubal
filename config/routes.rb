@@ -1,9 +1,6 @@
 #require 'rubal_core'
 #require 'rubal_core/lib/rubal_core/plugin_manager'
-
 Rubal::Application.routes.draw do
-
-  #resources :news
 
   devise_for :admins
 
