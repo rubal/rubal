@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  title: MyString
+  url: MyString
+  type: 1
+  layout: 
+  erb_path: MyString
+  rubhtml_path: MyString
+
+two:
+  name: MyString
+  title: MyString
+  url: MyString
+  type: 1
+  layout: 
+  erb_path: MyString
+  rubhtml_path: MyString

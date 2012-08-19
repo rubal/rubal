@@ -1,0 +1,38 @@
+<%= form_for(@snippet) do |f| %>
+  <% if @snippet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@snippet.errors.count, "error") %> prohibited this snippet from being saved:</h2>
+
+      <ul>
+      <% @snippet.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :subst_name %><br />
+    <%= f.text_field :subst_name %>
+  </div>
+
+    <h2>Описание</h2>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description, :size => '70x5' %>
+  </div>
+
+    <h2>Контент erb</h2>
+    <div class="field">
+      <%= f.label :erb_content %><br />
+      <%= f.text_area :erb_content, :size => '70x40'  %>
+    </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

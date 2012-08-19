@@ -1,0 +1,56 @@
+<%= form_for(@page) do |f| %>
+  <% if @page.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@page.errors.count, "error") %> prohibited this page from being saved:</h2>
+
+      <ul>
+      <% @page.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :url %><br />
+    <%= f.text_field :url %>
+  </div>
+  <div class="field">
+    <% if @page.type_id.nil? and @selected_page_type_id.nil? %>
+        <%= f.label :type_id, "Тип страницы" %><br />
+        <%= f.select :type_id, get_types_for_select %>
+    <% else %>
+        <%= f.hidden_field :type_id %>
+        <%= render :partial =>  "/news/page_additional_form_fields.html.erb", :locals => { :additional_params => @page.additional_params } %>
+    <% end %>
+  </div>
+
+    <div class="field">
+      <%= f.label :layout_id, "Шаблон" %><br />
+      <%= f.select :layout_id, get_layouts_for_select %>
+    </div>
+  <div class="field" style="position: relative;">
+    <%= f.label :rubhtml_content %><br />
+    <%= f.text_area :rubhtml_content %>
+    <div style="position: absolute; top:0px; left: 500px; width: 350px; border: 1px dashed #333; background-color: #EEE;">
+      <% @available_substs.each{|s| %>
+        <b><%= s[:substitution] %></b><br>
+          <i><%= s[:description] %></i><br>
+      <% } %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+

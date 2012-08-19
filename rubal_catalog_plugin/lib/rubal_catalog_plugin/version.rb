@@ -1,0 +1,3 @@
+module RubalCatalogPlugin
+  VERSION = "0.0.1"
+end

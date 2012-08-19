@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  humanized_name: MyString
+  description: MyString
+  plugin_name: MyString
+  substitutions_params: MyText
+
+two:
+  name: MyString
+  humanized_name: MyString
+  description: MyString
+  plugin_name: MyString
+  substitutions_params: MyText

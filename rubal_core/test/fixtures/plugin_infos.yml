@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  full_name: MyString
+  subst_name: MyString
+  path: MyString
+  resources_path: MyString
+
+two:
+  full_name: MyString
+  subst_name: MyString
+  path: MyString
+  resources_path: MyString

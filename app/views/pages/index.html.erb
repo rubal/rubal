@@ -1,0 +1,33 @@
+<h1>Listing pages</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Title</th>
+    <th>Url</th>
+    <th>Type</th>
+    <th>Layout</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @pages.each do |page| %>
+  <tr>
+    <td><%= page.name %></td>
+    <td><%= page.title %></td>
+    <td><%= page.url %></td>
+    <td><%= page.type %></td>
+    <td><%= (page.layout.nil?) ? "-" : page.layout.name %></td>
+    <td><%= link_to 'Show', page %></td>
+    <td><%= link_to 'Edit', edit_page_path(page) %></td>
+    <td><%= link_to 'Destroy', page, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<% get_types_for_new.each{|t| %>
+  <%= link_to 'Создать ' + t[0], {:controller => 'pages', :action => 'new', :page_type => t[1]} %> <br>
+<% } %>

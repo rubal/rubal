@@ -1,0 +1,5 @@
+<div class="field">
+  <h2>тред</h2>
+  <%= select_tag :trend_id, options_from_collection_for_select(NewsTrend.all, "id", "name", additional_params[:trend_id]) %>
+</div>
+

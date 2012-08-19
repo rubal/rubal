@@ -1,0 +1,21 @@
+<%= form_for(@news_trend) do |f| %>
+  <% if @news_trend.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@news_trend.errors.count, "error") %> prohibited this news_trend from being saved:</h2>
+
+      <ul>
+      <% @news_trend.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
