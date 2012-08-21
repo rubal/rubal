@@ -36,7 +36,11 @@ module RubalCore
 
       @substitutions.push RubalSubstitution.new(self, "title", "<%= @page.title %>", "Page title")
 
+      @substitutions.push RubalSubstitution.new(self, "page_text", "<%= get_page_content_for(@page.id) %>", "Текст страницы")
+
       @substitutions.push RubalSubstitution.new(self, "content", "<%= yield %>", "Page content", :only => :layout)
+
+      RubalCore::PluginManager.instance.register_menu_node('Pages', :pages, [{:name => 'Texts', :url => :page_contents}])
     end
   end
 end

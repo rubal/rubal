@@ -1,0 +1,30 @@
+<%= form_for(@page_content) do |f| %>
+  <% if @page_content.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@page_content.errors.count, "error") %> prohibited this page_content from being saved:</h2>
+
+      <ul>
+      <% @page_content.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+    <div class="field">
+      <%= f.label :page_id %><br />
+      <%= f.select :page_id, get_pages_for_select %>
+    </div>
+  <div class="field">
+    <%= f.label :content %><br />
+    <%= f.text_area :content, :class => 'wysiwyg' %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

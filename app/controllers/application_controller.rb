@@ -6,6 +6,4 @@ class ApplicationController < ActionController::Base
   #require_dependency 'test_engine'
   include RubalCore::Authorization
   before_filter :rubal_authenticate
-
-
 end

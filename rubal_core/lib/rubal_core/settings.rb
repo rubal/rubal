@@ -29,7 +29,7 @@ module RubalCore
     include Singleton
 
     # Settings file
-    Filename = 'lib/rubal_core/settings_db.rb'
+    Filename = File.expand_path('../settings_db.rb', __FILE__)
 
     def initialize # :nodoc:
       @logger = Logger.new STDERR
@@ -67,6 +67,7 @@ module RubalCore
     # Save changes to file
     # * filename -- path to file
     def flush filename = Filename
+      puts self.to_s
       File.open(filename,"w"){|file|
         file.print self.to_s
       }
@@ -79,7 +80,7 @@ module RubalCore
     def to_s # :nodoc:
       s = "{"
       self.each{|category_name,category_data|
-        s << ":#{category_name}=>\n\t" << category_data.to_s.gsub(/ /){ "\n\t" } << ",\n"
+        s << ":#{category_name}=>\n\t" << category_data.to_s << ",\n"       #.gsub(/ /){ "\n\t" }
       }
       s << "}\n"
     end

@@ -96,7 +96,7 @@ class PagesController < ApplicationController
     pti = RubalCore::PluginManager.instance.get_page_type_hash PageType.find(@page.type_id).name
     puts "____" + pti.to_s
     unless pti.nil?
-      if pti.include? :after_save_block
+      if pti.include?(:after_save_block) && !pti[:after_save_block].nil?
         pti[:after_save_block].call(params, @page)
       end
     end

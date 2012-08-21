@@ -31,6 +31,7 @@ module RubalNewsPlugin
       @substitutions.push RubalCore::RubalSubstitution.new(self, "header", "<%= n.header %>", "Заголовок", :only => :news_normal)
       @substitutions.push RubalCore::RubalSubstitution.new(self, "content", "<%= n.content %>", "Содержание новости", :only => :news_normal)
 
+      RubalCore::PluginManager.instance.register_menu_node('News', :news_index, [{:name => 'News trends', :url => :news_trends}])
     end
   end
 end

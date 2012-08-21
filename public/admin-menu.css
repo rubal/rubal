@@ -1,0 +1,15 @@
+div.main_menu_node {
+    float: left;
+    min-width: 100px;
+    font-size: 20px;
+    position: relative;
+}
+
+div.main_menu_children {
+    position: absolute;
+    top: 30px;
+    left: 0px;
+    min-width: 150px;
+    display: none;
+    background-color: #222;
+}

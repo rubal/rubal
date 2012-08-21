@@ -1,4 +1,5 @@
 RubalCatalogPlugin::Engine.routes.draw do
-  resources :items
-
+  scope '/admin' do
+    resources :items
+  end
 end

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title><%= (@admin_action_name.nil?) ? "" : @admin_action_name + " - "%>Rubal CMS</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+
+  <%= csrf_meta_tags %>
+  <%= stylesheet_link_tag "admin-panel.css" %>
+
+  <script type="text/javascript">
+      <% if params[:notice] %>
+      alert("<%=params[:notice]%>");
+      <% end %>
+      <% unless params[:edithtml] %>
+      $(document).ready(function() {
+          $('textarea.wysiwyg').tinymce({
+              script_url : '/tiny_mce/tiny_mce.js',
+              plugins : "youtubeIframe",
+              theme: 'advanced',
+              theme_advanced_buttons2_add : "youtubeIframe",
+              //valid_elements_add:"iframe[src|title|width|height|allowfullscreen|frameborder|class|id],object[classid|width|height|codebase|*],param[name|value|_value|*],embed[type|width|height|src|id|name|flashvars|bgcolor|allowfullscreen|allowscriptaccess|*]"
+              valid_elements: "*[*]",
+              extended_valid_elements: "embed[width|height|name|flashvars|src|bgcolor|align|play|loop|quality|allowscriptaccess|type|pluginspage]",
+          });
+      });
+      <% end %>
+  </script>
+
+</head>
+<body>
+
+<div id="header">
+  <div id="header-top">
+    <%= link_to('Редактировать учетную запись', edit_user_registration_path) %>
+    <%= link_to('Создать пользователя', '/admin/new_user')  %>
+    <%= link_to('Выйти', destroy_user_session_path, :method => :delete) %>
+  </div>
+  <div id="header-bottom">
+    <div id="header-text">
+      <%= render('menu/admin_menu') %>
+      <div class="clear"></div>
+    </div>
+    <div id="header-logo"><a href="http://rubalcms.org"><img src="/assets/header-logo.png" alt="Rubal CMS"/></a></div>
+  </div>
+</div>
+<div id="main" >
+  <div class="window">
+    <div class="title">
+      <%= (@admin_action_name.nil?) ? "" : @admin_action_name %>
+    </div>
+    <div class="body">
+
+      <div class="block"><p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+        <div class="body">
+          <%= yield %>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<div id="footer">
+</div>
+</body>
+</html>

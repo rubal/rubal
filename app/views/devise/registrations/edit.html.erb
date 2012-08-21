@@ -1,0 +1,30 @@
+<h2>Редактировать аккаунт</h2>
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put , :class => "form-horizontal"}) do |f| %>
+    <%= devise_error_messages! %>
+
+    <div class="control-group">
+      <%= f.label :email, :class => "control-label" %>
+      <div class="controls"><%= f.email_field :email %></div>
+    </div>
+
+    <div class="control-group"><%= f.label :password, "Пароль", :class => "control-label"%>
+      <div class="controls"><%= f.password_field :password, :autocomplete => "off", :placeholder => "(если хотите менять)" %></div>
+    </div>
+
+    <div class="control-group"><%= f.label :password_confirmation, "Подтверждение", :class => "control-label" %>
+      <div class="controls"><%= f.password_field :password_confirmation, :autocomplete => "off" %></div>
+    </div>
+
+    <div class="control-group"><%= f.label :current_password, "Текущий пароль", :class => "control-label" %>
+      <div class="controls"><%= f.password_field :current_password %></div>
+    </div>
+
+    <div><%= f.submit "Сохранить", :class => "btn btn-primary" %></div>
+<% end %>
+
+<h3>Удалить</h3>
+
+<p>Несчастны? <%= link_to "Удалить аккаунт", registration_path(resource_name), :data => { :confirm => "Уверены?" }, :method => :delete, :class => "btn btn-danger btn-mini" %>.</p>
+
+<%= link_to "Назад", :back, :class => "btn btn-small" %>

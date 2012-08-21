@@ -1,0 +1,12 @@
+<ul class="nav nav-list">
+<% RubalCore::RubalMainMenu.instance.children_arr.each do |node| %>
+    <li><%= link_to node.hash_node[:name], node.hash_node[:url] %></li>
+    <% unless node.children_arr.blank? %>
+         <% node.children_arr.each do |n_ch| %>
+           <li><%= link_to "&mdash;".html_safe + n_ch.hash_node[:name], n_ch.hash_node[:url] %></li>
+         <% end %>
+    <% end %>
+  <li class="divider"></li>
+<% end %>
+</ul>
+

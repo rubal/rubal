@@ -1,13 +1,29 @@
-<h1>Listing pages</h1>
+<div class="row">
+  <div class="span8">
+    <h2>Страницы</h2>
+  </div>
+  <div class="span1">
+    <h2>
+      <div class="btn-group">
+        <a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#" title="Создать"><i class="icon-plus icon-white"></i>&nbsp;<span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <% get_types_for_new.each{|t| %>
+              <%= link_to t[0], {:controller => 'pages', :action => 'new', :page_type => t[1]} %>
+          <% } %>
+        </ul>
+      </div>
+    </h2>
+  </div>
+</div>
 
-<table>
+<table class="table">
   <tr>
     <th>Name</th>
     <th>Title</th>
     <th>Url</th>
     <th>Type</th>
     <th>Layout</th>
-    <th></th>
     <th></th>
     <th></th>
   </tr>
@@ -19,15 +35,10 @@
     <td><%= page.url %></td>
     <td><%= page.type %></td>
     <td><%= (page.layout.nil?) ? "-" : page.layout.name %></td>
-    <td><%= link_to 'Show', page %></td>
-    <td><%= link_to 'Edit', edit_page_path(page) %></td>
-    <td><%= link_to 'Destroy', page, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to '<i class="icon-pencil"></i>'.html_safe, edit_page_path(page) %></td>
+    <td><%= link_to '<i class="icon-remove"></i>'.html_safe, page, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
 
-<br />
 
-<% get_types_for_new.each{|t| %>
-  <%= link_to 'Создать ' + t[0], {:controller => 'pages', :action => 'new', :page_type => t[1]} %> <br>
-<% } %>

@@ -5,7 +5,7 @@ module RubalCore
   class FileHelper
     include Singleton
 
-    def read_file path
+    def read_file(path)
       path = "/" + path unless path[0] == "/"
       file = File.open(Rails.root.to_s + path)
       rethtml = ""
@@ -14,7 +14,7 @@ module RubalCore
       return rethtml
     end
 
-    def write_file path, value
+    def write_file(path, value)
       path = "/" + path unless path[0] == "/"
       my_file = File.new(Rails.root.to_s + path, "w+")
       value.gsub!(Regexp.new('\r\n'), "\n")
@@ -22,7 +22,9 @@ module RubalCore
       my_file.close
     end
 
-    def imagine_long_filename base, ext
+    # придумывает длинное имя для файла.
+    # первый аргумент - начало имени, второй - расширение
+    def imagine_long_filename(base, ext)
       require 'digest/md5'
       r = Random.new
       add_num = r.rand(1...10000).to_s

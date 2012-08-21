@@ -71,7 +71,7 @@ module RubalCore
       }
     end
 
-    def register_page_type plugin, name, humanized_name, description, controller = nil, after_save_block = nil
+    def register_page_type(plugin, name, humanized_name, description, controller = nil, after_save_block = nil)
       @@registered_page_types.push :plugin => plugin, :name => name, :humanized_name => humanized_name, :description => description, :controller => controller, :after_save_block => after_save_block
     end
 
@@ -82,6 +82,12 @@ module RubalCore
         end
       }
       return nil
+    end
+
+    def register_menu_node(name, url, children = [])
+      nd = RubalMenuNode.new_node({:name => name, :url => url})
+      children.each {|c| nd.add_child= RubalMenuNode.new_node(c) }
+      RubalMainMenu.instance.add_child= nd
     end
   end
 end

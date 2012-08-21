@@ -1,0 +1,27 @@
+<h1>Listing page_contents</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Content</th>
+    <th>Page</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @page_contents.each do |page_content| %>
+  <tr>
+    <td><%= page_content.name %></td>
+    <td><%= page_content.content %></td>
+    <td><%= page_content.page_id %></td>
+    <td><%= link_to 'Show', page_content %></td>
+    <td><%= link_to 'Edit', edit_page_content_path(page_content) %></td>
+    <td><%= link_to 'Destroy', page_content, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Page content', new_page_content_path %>
