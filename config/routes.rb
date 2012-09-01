@@ -1,8 +1,9 @@
 require File.expand_path("rubal_core/lib/rubal_core", Rails.root.to_s)
-
+include RubalCore::RubalLogger
 RubalLi::Application.routes.draw do
-
+  get '/pages/perf_test_create'
   scope '/admin' do
+    match "/pages/:id/edit/html" => 'pages#edit', :edit_html => true, :as => :page_edit_html
     match "/pages/new/:page_type" => 'pages#new', :as => :new_page_type
     resources :pages
     get "/pages/clear"
@@ -10,9 +11,19 @@ RubalLi::Application.routes.draw do
   end
 
 
-  RubalCore::PluginManager.instance.get_routing_rules.each_pair{|k,v|
-    Page.find_all_by_type_id(PageType.find_by_name(k.to_s).id).each{|p|
-      match p.url + ".html" => v, :url => p.url
+  RubalCore::PluginManager.instance.get_routing_rules.each_pair{|page_type, processor|
+    Page.find_all_by_type_id(PageType.find_by_name(page_type.to_s).id).each{|p|
+      color_log("Configuring routes for " + page_type, :green)
+      if processor.kind_of? String
+        match p.url + ".html" => processor, :url => p.url
+      elsif (processor.kind_of? Proc)
+        #begin
+          processor.call(self, p.url)
+        #rescue
+          # TODO : записать в лог
+        #end
+
+      end
     }
   }
 

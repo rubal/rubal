@@ -12,18 +12,27 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :header %><br />
-    <%= f.text_field :header %>
+    <%= f.label :header, "Заголовок"%>
+    <%= f.text_field :header, :class => "input-xxlarge" %>
+  </div>
+  <div class="field news-datetime-pick">
+    <%= f.label :date, "Дата и время новости" %>
+    <%= f.datetime_select :date %>
   </div>
   <div class="field">
-    <%= f.label :trend_id %><br />
-    <%= f.select :trend_id, get_trends_for_select %>
+    <% unless @selected_trend %>
+        <%= f.label :trend_id, "Раздел" %><br />
+        <%= f.select :trend_id, get_trends_for_select %>
+    <% else %>
+        <%= f.hidden_field :trend_id, :value => @selected_trend.id %>
+    <% end %>
   </div>
   <div class="field">
-    <%= f.label :content %><br />
-    <%= f.text_area :content %>
+    <%= f.label :content, "Тело новости" %>
+    <%= f.text_area :content, :class => "input-xxlarge wysiwyg" %>
   </div>
+  <br>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :value => "Сохранить новость", :class => "btn btn-large btn-primary", %>
   </div>
 <% end %>

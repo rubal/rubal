@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.3'
+gem 'rails', '3.2.8'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -42,4 +42,4 @@ gem 'rubal_snippets_plugin', path: 'rubal_snippets_plugin'
 gem 'rubal_news_plugin', path: 'rubal_news_plugin'
 gem 'rubal_catalog_plugin', path: 'rubal_catalog_plugin'
 gem 'devise'
-gem 'paperclip'
+gem 'paperclip', '3.0.4'

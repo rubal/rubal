@@ -1,8 +1,23 @@
 class NewsController < ApplicationController
   # GET /news
   # GET /news.json
+
+  before_filter :only => [:new, :create] do
+    @selected_trend = nil
+    unless params[:selected_trend_id].blank?
+      begin
+      @selected_trend = NewsTrend.find(params[:selected_trend_id])
+      rescue
+        @selected_trend = nil
+      end
+    end
+  end
+
   def index
-    @news = News.all
+    @trends = []
+    NewsTrend.all.each do |nt|
+      @trends.push({:name => nt.name, :id => nt.id, :news => News.find_all_by_trend_id(nt.id)})
+    end
 
     respond_to do |format|
       format.html # index.html.erb

@@ -11,7 +11,37 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120820182858) do
+ActiveRecord::Schema.define(:version => 20120829123522) do
+
+  create_table "catalog_sections", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "key"
+  end
+
+  create_table "item_photos", :force => true do |t|
+    t.string   "name"
+    t.integer  "item_id"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+    t.string   "data_file_name"
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.datetime "data_updated_at"
+  end
+
+  create_table "items", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.float    "price"
+    t.integer  "section_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "items", ["section_id"], :name => "index_items_on_section_id"
 
   create_table "news", :force => true do |t|
     t.string   "header"
@@ -19,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20120820182858) do
     t.text     "content"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.datetime "date"
   end
 
   create_table "news_trends", :force => true do |t|
@@ -56,9 +87,28 @@ ActiveRecord::Schema.define(:version => 20120820182858) do
     t.datetime "updated_at",                        :null => false
     t.string   "rubhtml_content",   :default => "", :null => false
     t.text     "additional_params"
+    t.string   "erb_hash"
   end
 
   add_index "pages", ["layout_id"], :name => "index_pages_on_layout_id"
+
+  create_table "permissions", :force => true do |t|
+    t.string   "name"
+    t.string   "key"
+    t.string   "plugin_name"
+    t.text     "description"
+    t.text     "params"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "permissions_user_groups", :id => false, :force => true do |t|
+    t.integer "user_group_id"
+    t.integer "permission_id"
+  end
+
+  add_index "permissions_user_groups", ["permission_id", "user_group_id"], :name => "index_permissions_user_groups_on_permission_id_and_user_group_id"
+  add_index "permissions_user_groups", ["user_group_id", "permission_id"], :name => "index_permissions_user_groups_on_user_group_id_and_permission_id"
 
   create_table "plugin_infos", :force => true do |t|
     t.string   "full_name"
@@ -69,30 +119,6 @@ ActiveRecord::Schema.define(:version => 20120820182858) do
     t.datetime "updated_at",     :null => false
   end
 
-  create_table "rubal_catalog_plugin_items", :force => true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.float    "price"
-    t.integer  "section_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  add_index "rubal_catalog_plugin_items", ["section_id"], :name => "index_rubal_catalog_plugin_items_on_section_id"
-
-  create_table "rubal_catalog_plugin_photos", :force => true do |t|
-    t.string   "name"
-    t.integer  "item_id"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
-    t.string   "data_file_name"
-    t.string   "data_content_type"
-    t.integer  "data_file_size"
-    t.datetime "data_updated_at"
-  end
-
-  add_index "rubal_catalog_plugin_photos", ["item_id"], :name => "index_rubal_catalog_plugin_photos_on_item_id"
-
   create_table "snippets", :force => true do |t|
     t.string   "name"
     t.string   "subst_name"
@@ -100,6 +126,14 @@ ActiveRecord::Schema.define(:version => 20120820182858) do
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "user_groups", :force => true do |t|
+    t.string   "name"
+    t.string   "key"
+    t.text     "params"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -115,6 +149,7 @@ ActiveRecord::Schema.define(:version => 20120820182858) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
+    t.integer  "user_group_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

@@ -2,3 +2,16 @@
   Place all the styles related to the matching controller here.
   They will automatically be included in application.css.
 */
+
+div.plus-button-news {
+    margin-top: 20px;
+    text-align: right;
+}
+
+table.table-news {
+    width: 100%;
+}
+
+div.news-datetime-pick select {
+    width: auto;
+}

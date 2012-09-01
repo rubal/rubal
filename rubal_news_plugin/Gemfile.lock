@@ -1,13 +1,13 @@
 PATH
-  remote: ../rubal_core
-  specs:
-    rubal_core (0.0.1)
-      rails (~> 3.2.3)
-
-PATH
   remote: .
   specs:
     rubal_news_plugin (0.0.1)
+      rails (~> 3.2.3)
+
+PATH
+  remote: ../rubal_core
+  specs:
+    rubal_core (0.0.1)
       rails (~> 3.2.3)
 
 GEM

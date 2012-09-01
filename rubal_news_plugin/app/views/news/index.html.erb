@@ -1,27 +1,34 @@
-<h1>Все новости</h1>
-
-<table class="table">
-  <tr>
-    <th>Заголовок</th>
-    <th>Раздел</th>
-    <th>Содержание</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @news.each do |news| %>
-  <tr>
-    <td><%= news.header %></td>
-    <td><%= NewsTrend.find(news.trend_id).name %></td>
-    <td><%= news.content %></td>
-    <td><%= link_to '<i class="icon-eye-open"></i>'.html_safe, news_path(news) %></td>
-    <td><%= link_to '<i class="icon-pencil"></i>'.html_safe, edit_news_path(news) %></td>
-    <td><%= link_to '<i class="icon-remove"></i>'.html_safe, news, confirm: 'Точно?', method: :delete %></td>
-  </tr>
+<div class="page-header"><h2>Все новости</h2></div>
+<% @trends.each do |trend| %>
+    <div class="row">
+      <div class="span8"><h1><%= trend[:name] %></h1></div>
+      <div class="span1 plus-button-news">
+        <%= link_to '<i class="icon-plus icon-white"></i>'.html_safe, create_news_in_trend_path(trend[:id]), :class => "btn btn-small btn-primary" %>
+      </div>
+    </div>
+   <% if trend[:news].blank? %>
+     <em>(Новостей еще нет)</em>
+     <div></div>
+   <% else %>
+    <table class="table table-news">
+      <tr>
+        <th class="span3">Заголовок</th>
+        <th class="span4">Содержание</th>
+        <th class="span2"></th>
+      </tr>
+    <% trend[:news].each do |news| %>
+      <tr>
+        <td><%= news.header %></td>
+        <td><%= news.content %></td>
+        <td class="buttons">
+          <div class="btn-group">
+            <%= link_to '<i class="icon-eye-open"></i>'.html_safe, news_path(news), :class => 'btn btn-small'  %>
+            <%= link_to '<i class="icon-pencil"></i>'.html_safe, edit_news_path(news) , :class => 'btn btn-small' %>
+            <%= link_to '<i class="icon-remove"></i>'.html_safe, news, confirm: 'Точно?', method: :delete , :class => 'btn btn-small' %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </table>
+   <% end %>
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New News', new_news_path %>

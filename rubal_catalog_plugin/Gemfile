@@ -18,4 +18,4 @@ gem "jquery-rails"
 
 gem 'rubal_core', path: '../rubal_core'
 
-gem 'paperclip'
+gem 'paperclip', '3.0.4'

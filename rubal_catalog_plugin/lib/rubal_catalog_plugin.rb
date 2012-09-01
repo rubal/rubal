@@ -19,9 +19,17 @@ module RubalCatalogPlugin
 
       @substitutions = []
 
-      RubalCore::PluginManager.instance.register_page_type self, 'catalog_normal', 'Каталог', "Страница каталогом", 'catalog#catalog_with_section'
+      routes_for_browse = lambda {|route_class, url|
+        route_class.send :match, "/#{url}/:section_key.html" => "items#browse_section", :url => url
+      }
+
+      RubalCore::PluginManager.instance.register_page_type self, 'catalog_all', 'Каталог, все секции', "Страница с каталогом", 'items#browse_all'
+      RubalCore::PluginManager.instance.register_page_type self, 'catalog_section', 'Каталог, конкретная секция', "Каталог, конкретная секция", routes_for_browse
 
       @substitutions.push RubalCore::RubalSubstitution.new(self, "size", "<%= @catalog.size %>", "Количество новостей", :only => :catalog_normal)
+
+      RubalCore::PluginManager.instance.register_menu_node('Каталог', :items, [:name => 'Секции', :url => :catalog_sections])
+
 
     end
   end
