@@ -8,6 +8,30 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
- *= require_tree .
+ = require_self
+ = require_tree .
+
+
+ = require 'rubal_plugins'
 */
+
+div.page-header h2 {
+    color: #888;
+}
+
+.table td.buttons {
+    text-align: right;
+}
+
+
+
+div.plus-button {
+    margin-top: 25px;
+}
+
+div#cm-fullscreen-container {
+    display: none;
+}
+
+
+

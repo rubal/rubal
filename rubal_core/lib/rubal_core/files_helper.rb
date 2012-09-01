@@ -4,7 +4,7 @@ require "singleton"
 module RubalCore
   class FileHelper
     include Singleton
-
+    include RubalLogger
     def read_file(path)
       path = "/" + path unless path[0] == "/"
       file = File.open(Rails.root.to_s + path)
@@ -15,6 +15,7 @@ module RubalCore
     end
 
     def write_file(path, value)
+      color_log "write to" + path, :magenta
       path = "/" + path unless path[0] == "/"
       my_file = File.new(Rails.root.to_s + path, "w+")
       value.gsub!(Regexp.new('\r\n'), "\n")

@@ -1,0 +1,22 @@
+a.form-helper {
+    color: #153e42;
+    font-size: 17px;
+    margin: 10px 0px 5px 0px;
+    border-bottom: 1px dashed #153e42;
+}
+
+#rubal-vhtml-editor {
+    width: 100%;
+}
+
+.CodeMirror {
+    max-width: 100%;
+    -webkit-border-radius:3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #CCC;
+}
+.cm-rubhtml-placeholder {
+    color: #ff3e52;
+    background-color: #fffcd7;
+}

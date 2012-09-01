@@ -1,7 +1,11 @@
 {:common=>
 	{:cms_name=>"rubal"},
-:news=>
-	{:news_on_page=>10, :installed=>false},
-:cache=>
-	{:cache_by_dafault=>false, :auto_update=>true, :auto_update_time=>86400},
+:pages=>
+  {:page_erb_dir => "/pages/", :redirect_on_permission_denied => '/?permission_denied'},
+:plugins=>
+  {},
+:basic_user_groups =>
+  {:admins => {:key => 'admins', :name => "Администраторы"},
+   :guests => {:key => 'guests', :name => "Гости"},
+   :members => {:key => 'members', :name => 'Пользователи'}}
 }

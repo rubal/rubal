@@ -3,23 +3,18 @@ require "pages_helper"
 
 class Page < ActiveRecord::Base
   include PagesHelper
+
+  validate :name, :presence  => true
+
   belongs_to :layout, :class_name => 'Page'
   serialize :additional_params, Hash
 
   #has_one :type, :class_name => 'PageType', :foreign_key => 'type_id'
   attr_accessible :erb_path, :name, :title, :type_id, :url, :rubhtml_content, :layout_id
 
-  rubal_erb_content :erb_content, :path_field => :erb_path, :from => :rubhtml_content
-  #rubal_rubhtml_content :rubhtml_content, :path_field => :rubhtml_path
+  #attr_accessor :erb_hash
 
-  #def layout_id
-  #  return nil if self.layout.nil?
-  #  return self.layout.id
-  #end
-  #
-  #def layout_id= val
-  #  self.layout = Page.find(val)
-  #end
+  rubal_erb_content :erb_content, :path_field => :erb_path, :from_field => :rubhtml_content, :erb_hash_field => :erb_hash=
 
   def type
     unless @type_id.nil?
@@ -29,13 +24,5 @@ class Page < ActiveRecord::Base
     end
     #raise "the page has strange type"
   end
-  #
-  #def type= t
-  #  if((page_types).include? type)
-  #    self.type_id= (page_types)[t][:id]
-  #  else
-  #    raise "trying to set strange page type"
-  #  end
-  #end
 
 end

@@ -4,6 +4,16 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= (@admin_action_name.nil?) ? "" : @admin_action_name + " - "%>Rubal CMS</title>
+
+  <link rel="stylesheet" href="/codemirror/lib/codemirror.css">
+  <script src="/codemirror/lib/codemirror.js"></script>
+
+  <script src="/codemirror/lib/util/multiplex.js"></script>
+  <script src="/codemirror/mode/xml/xml.js"></script>
+  <script src="/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+  <script src="/codemirror/mode/css/css.js"></script>
+  <script src="/codemirror/mode/javascript/javascript.js"></script>
+
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
 
@@ -13,8 +23,9 @@
       <% if params[:notice] %>
       alert("<%=params[:notice]%>");
       <% end %>
-      <% unless params[:edithtml] %>
+
       $(document).ready(function() {
+        <% if params[:edit_wysiwyg] %>
           $('textarea.wysiwyg').tinymce({
               script_url : '/tiny_mce/tiny_mce.js',
               plugins : "youtubeIframe",
@@ -24,16 +35,20 @@
               valid_elements: "*[*]",
               extended_valid_elements: "embed[width|height|name|flashvars|src|bgcolor|align|play|loop|quality|allowscriptaccess|type|pluginspage]",
           });
+        <% else %>
+          initCodeEditor();
+        <% end %>
       });
-      <% end %>
+
+
   </script>
 
 </head>
 <body>
 <div class="container">
+    <div id="cm-fullscreen-container">
 
-
-
+    </div>
     <div class="navbar">
       <div class="navbar-inner">
         <div class="container">
@@ -43,13 +58,15 @@
           </ul>
           <ul class="nav pull-right">
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <i class="icon-user"></i> <%= current_user.email %><b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><%= link_to('Редактировать', edit_user_registration_path) %></li>
-                <li class="divider"></li>
-                <li><%= link_to('Выйти', destroy_user_session_path, :method => :delete) %></li>
-              </ul>
+              <% unless current_user.nil? %>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="icon-user"></i> <%= current_user.email %><b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><%= link_to('Редактировать', edit_user_registration_path) %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to('Выйти', destroy_user_session_path, :method => :delete) %></li>
+                </ul>
+              <% end %>
             </li>
           </ul>
 

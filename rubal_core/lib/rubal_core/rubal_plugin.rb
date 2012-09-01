@@ -1,5 +1,5 @@
 #encoding: utf-8
-
+require_relative '../rubal_core'
 module RubalCore
   class RubalPlugin
     def get_substitutions
@@ -23,14 +23,16 @@ module RubalCore
     end
 
     def get_description
-      return {:name => "Rubal pages", :version => 0.01, :plugin_substitution_name => "page"}
+      return {:name => "Страницы", :version => 0.01, :plugin_substitution_name => "page"}
     end
 
     def initialize
-      RubalCore::PluginManager.instance.register_plugin self
+      plugin_manager = RubalCore::PluginManager.instance
 
-      RubalCore::PluginManager.instance.register_page_type self, 'page', 'Страница', "Обычная страница со всеми доступными подстановками"
-      RubalCore::PluginManager.instance.register_page_type self, 'layout', 'Шаблон', "Внешнее обрамление для страниц"
+      plugin_manager.register_plugin self
+
+      plugin_manager.register_page_type self, 'page', 'Страница', "Обычная страница со всеми доступными подстановками"
+      plugin_manager.register_page_type self, 'layouts', 'Шаблон', "Внешнее обрамление для страниц"
 
       @substitutions = []
 
@@ -40,7 +42,9 @@ module RubalCore
 
       @substitutions.push RubalSubstitution.new(self, "content", "<%= yield %>", "Page content", :only => :layout)
 
-      RubalCore::PluginManager.instance.register_menu_node('Pages', :pages, [{:name => 'Texts', :url => :page_contents}])
+      plugin_manager.register_menu_node('Страницы', :pages)
+
+      PermissionManager.instance.add_permission(self, "Тестовое разрешение", "Просто посмотрим как работает", "test_permission", {:pages => [:show, :edit]}, :admins)
     end
   end
 end

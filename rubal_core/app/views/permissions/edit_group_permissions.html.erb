@@ -1,0 +1,19 @@
+<h1>Редактирование прав для группы "<%= @group.name %>"</h1>
+<%= form_tag({:action => :update_group_permissions}, :remote => true, :id=> 'update_group_form') do %>
+  <%= hidden_field_tag 'user_group_id', @group.id  %>
+  <% @all_permissions.each do |plugin_name, perms| %>
+    <h2><%= plugin_name %></h2>
+    <div class="row">
+      <% perms.each do |p| %>
+        <div class="span3">
+          <label>
+            <%= check_box_tag "user_group[permission_ids][]", p.id, @group.permission_ids.include?(p.id) %>
+            <%= p.name %>
+          </label>
+          <%= p.description %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <%= submit_tag 'Сохранить', :disable_with => "Загрузка...", :class => 'btn'  %>
+<% end %>

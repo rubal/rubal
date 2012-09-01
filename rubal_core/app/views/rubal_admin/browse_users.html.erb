@@ -1,0 +1,15 @@
+<h2>Управление пользователями</h2>
+<table class="table table-bordered table-striped">
+  <tr><th>Email</th><th>Группа</th></tr>
+  <% @users.each do |user| %>
+  <tr>
+    <td><%= user.email %></td>
+    <td>
+      <%= form_tag( {:controller => 'rubal_admin', :action => "set_user_group", :user_id => user.id }, :remote => true, :class => 'form-inline user-edit-group') do %>
+      <%= select_tag :user_group_id, options_from_collection_for_select(@groups, "id", "name", user.user_group.id) %>
+        <%= submit_tag "Сохранить", :class => 'btn', :disable_with => "loading" %>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+</table>

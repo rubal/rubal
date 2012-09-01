@@ -1,27 +1,39 @@
-require Rails.root.to_s + "/rubal_core/lib/rubal_core.rb"
+#encoding: utf-8
+
+require Rails.root.to_s + "/rubal_core/lib/rubal_core"
+require_relative "../../rubal_core/lib/rubal_core/rubal_controller"
+include RubalCore::RubalLogger
 
 class PagesController < ApplicationController
-  before_filter :only => ['new', 'create'] do
+
+
+  before_filter :only => ['new', 'create', 'edit', 'update'] do
+    # TODO сделать нормально
+
+    plugin_manager = RubalCore::PluginManager.instance
 
     @selected_page_type_id = nil
 
-    page_type = nil
     unless params[:page_type].nil?
       pt = PageType.find_by_name(params[:page_type])
-      unless pt.nil?
-        @selected_page_type_id = pt.id
-        page_type =  params[:page_type].to_sym
-      end
+      @selected_page_type_id = pt.id unless pt.nil?
     end
 
+    unless params[:id].blank?
+      @selected_page_type_id = Page.find(params[:id]).type_id
+    end
 
-    @available_substs = RubalCore::PluginManager.instance.get_available_substitutions_descriptions(page_type)
-  end
+    if @selected_page_type_id.nil?
+      flash[:notice] = "Неизвестный тип страницы"
+      redirect_to :pages
+    end
 
-  before_filter :only => ['edit', 'update'] do
-    @page = Page.find(params[:id])
-    @selected_page_type_id = @page.type_id
-    @available_substs = RubalCore::PluginManager.instance.get_available_substitutions_descriptions(@selected_page_type_id)
+    @available_substs = plugin_manager.get_available_substitutions_descriptions(@selected_page_type_id)
+
+    @allowed_form_fields = [:url, :title, :layout]
+
+    @additional_form_partials = []
+
   end
 
   # GET /pages
@@ -45,13 +57,14 @@ class PagesController < ApplicationController
     end
 
     append_view_path(Rails.root.to_s)
-    render @page.erb_path, :layout  => (@page.layout.nil?) ? false : ('../' + @page.layout.erb_path)
-    return
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @page }
-    end
+    rubal_render @page
+    #             .erb_path, :layout  => (@page.layout.nil?) ? false : ('../' + @page.layout.erb_path)
+    #return
+    #
+    #respond_to do |format|
+    #  format.html # show.html.erb
+    #  format.json { render json: @page }
+    #end
   end
 
   # GET /pages/new
@@ -94,7 +107,7 @@ class PagesController < ApplicationController
     #@page = Page.find(params[:id])
 
     pti = RubalCore::PluginManager.instance.get_page_type_hash PageType.find(@page.type_id).name
-    puts "____" + pti.to_s
+
     unless pti.nil?
       if pti.include?(:after_save_block) && !pti[:after_save_block].nil?
         pti[:after_save_block].call(params, @page)
@@ -122,5 +135,29 @@ class PagesController < ApplicationController
       format.html { redirect_to pages_url }
       format.json { head :no_content }
     end
+  end
+
+  def perf_test_create
+    require "time"
+    t1 = Time.now
+
+    Page.all.each{|p| p.destroy}
+    num = 0
+    a = 10
+    num.times do
+      a += 3
+      Page.create({:name => "fuck you, test #{a}", :type_id => 1})
+    end
+    arrr = []
+    Page.all.each{|p|
+      arrr << p.id
+    }
+
+    arrr.each{|i|
+      pp = Page.find(i)
+      puts pp.created_at
+    }
+
+    render :inline => (Time.now - t1).to_s
   end
 end

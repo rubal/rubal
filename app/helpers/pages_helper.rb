@@ -20,7 +20,7 @@ module PagesHelper
 
   def get_layouts_for_select
     layouts = [["Нет", ""]]
-    Page.find_all_by_type_id(PageType.find_by_name('layout').id).each{|l|
+    Page.find_all_by_type_id(PageType.find_by_name('layouts').id).each{|l|
       layouts.push [l.name, l.id]
     }
     return layouts

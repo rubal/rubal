@@ -18,8 +18,11 @@ module RubalCore
 
     # транслирует content_from (текст) в erb, записывает его в path_to
     # page_type_id - id типа страницы для определения разрешенных/запрещенных подстановок
-    def translate_to_erb content_from, path_to, page_type_id
-      replaced = content_from.dup
+    def translate_to_erb page, from_field, to_field, erb_hash_field
+      #content_from, path_to, page_type_id
+      page_type_id = page.type_id
+
+      replaced = (page.send from_field).dup
       placeholders = RubalRubhtmlParser.instance.parse replaced
 
       placeholders.each_pair {|pl_name, found_plhs|
@@ -46,8 +49,13 @@ module RubalCore
           }
         end
       }
-      # запись результата
-      FileHelper.instance.write_file path_to, replaced
+
+      page.send to_field, replaced
+      unless erb_hash_field.nil?
+        require 'digest/md5'
+        page.send(erb_hash_field, Digest::MD5.hexdigest(replaced.gsub(/[\n\r]/, '')))
+      end
+
     end
   end
 end

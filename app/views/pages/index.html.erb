@@ -1,30 +1,27 @@
 <div class="row">
   <div class="span8">
-    <h2>Страницы</h2>
+    <div class="page-header"><h2>Страницы</h2></div>
   </div>
-  <div class="span1">
-    <h2>
+  <div class="span1 plus-button">
       <div class="btn-group">
-        <a class="btn btn-success dropdown-toggle" data-toggle="dropdown" href="#" title="Создать"><i class="icon-plus icon-white"></i>&nbsp;<span class="caret"></span>
+        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#" title="Создать"><i class="icon-plus icon-white"></i>&nbsp;<span class="caret"></span>
         </a>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu pull-right">
           <% get_types_for_new.each{|t| %>
-              <%= link_to t[0], {:controller => 'pages', :action => 'new', :page_type => t[1]} %>
+              <li><%= link_to t[0], {:controller => 'pages', :action => 'new', :page_type => t[1]} %></li>
           <% } %>
         </ul>
       </div>
-    </h2>
   </div>
 </div>
 
-<table class="table">
+<table class="table table-striped">
   <tr>
-    <th>Name</th>
-    <th>Title</th>
+    <th>Название</th>
+    <th>Заголовок</th>
     <th>Url</th>
-    <th>Type</th>
-    <th>Layout</th>
-    <th></th>
+    <th>Тип</th>
+    <th>Шаблон</th>
     <th></th>
   </tr>
 
@@ -35,8 +32,14 @@
     <td><%= page.url %></td>
     <td><%= page.type %></td>
     <td><%= (page.layout.nil?) ? "-" : page.layout.name %></td>
-    <td><%= link_to '<i class="icon-pencil"></i>'.html_safe, edit_page_path(page) %></td>
-    <td><%= link_to '<i class="icon-remove"></i>'.html_safe, page, confirm: 'Are you sure?', method: :delete %></td>
+    <td class="buttons">
+      <div class="btn-group">
+        <%= link_to '<i class="icon-eye-open"></i>'.html_safe, "/#{page.url}.html", :title => 'Открыть', :class => 'btn btn-small' %>
+        <!--<%= link_to '<i class="icon-pencil"></i>'.html_safe, edit_page_path(page), :title => 'Редактировать', :class => 'btn btn-small' %>-->
+        <%= link_to '<i class="icon-pencil"></i>'.html_safe, page_edit_html_path(page), :title => 'Редактировать vHTML (для опытных пользователей)', :class => 'btn btn-small' %>
+        <%= link_to '<i class="icon-remove"></i>'.html_safe, page, confirm: 'Точно?', method: :delete, :title => 'Удалить', :class => 'btn btn-small' %>
+      </div>
+    </td>
   </tr>
 <% end %>
 </table>
