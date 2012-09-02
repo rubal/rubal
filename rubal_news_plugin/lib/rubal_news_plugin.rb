@@ -15,18 +15,17 @@ module RubalNewsPlugin
     end
 
     def initialize
-
       RubalCore::PluginManager.instance.register_plugin self
 
       @substitutions = []
 
-      after_save_block = lambda { |params, page|
+      after_save = lambda { |params, page|
           page.additional_params= {:trend_id => params[:trend_id].to_i}
       }
 
+      form_params = {:after_save => after_save, :additional_form_fields => "/news/page_additional_form_fields.html.erb"}
 
-
-      RubalCore::PluginManager.instance.register_page_type self, 'news_normal', 'Новости', "Страница с новостями", 'news#news_with_trend', after_save_block
+      RubalCore::PluginManager.instance.register_page_type(self, 'news_normal', 'Новости', "Страница с новостями", 'news#news_with_trend', form_params)
 
       @substitutions.push(RubalCore::RubalSubstitution.new(self, "size", "<%= @news.size %>", "Количество новостей", :only => :news_normal))
       @substitutions.push(RubalCore::RubalSubstitution.new(self, "begin", "<% @news.each{|n| %>", "Начало вывода новостей", :only => :news_normal))

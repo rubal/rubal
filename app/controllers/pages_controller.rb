@@ -12,28 +12,42 @@ class PagesController < ApplicationController
 
     plugin_manager = RubalCore::PluginManager.instance
 
-    @selected_page_type_id = nil
+    @page_type = nil
 
-    unless params[:page_type].nil?
-      pt = PageType.find_by_name(params[:page_type])
-      @selected_page_type_id = pt.id unless pt.nil?
+    begin
+      if ['new', 'create'].include? action_name.to_s
+        @page = Page.new
+
+        unless params[:page_type].nil?
+          @page_type = PageType.find_by_name(params[:page_type])
+          @page.type_id= @page_type.id
+        end
+
+        unless params[:page].blank?
+          @page_type = PageType.find(params[:page][:type_id]) unless params[:page][:type_id].blank?
+        end
+
+      elsif ['edit', 'update'].include? action_name.to_s
+        @page = Page.find(params[:id])
+        @page_type = PageType.find(@page.type_id)
+      end
+
+      if ['create', 'update'].include? action_name.to_s
+        @page.params_for_type_before_save= params unless @page.before_save.nil?
+      end
+    rescue
+      puts "FFFFFFFFFFFFFFFUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU"
+      @page_type = nil
     end
 
-    unless params[:id].blank?
-      @selected_page_type_id = Page.find(params[:id]).type_id
-    end
-
-    if @selected_page_type_id.nil?
+    if @page_type.nil? || @page.nil?
       flash[:notice] = "Неизвестный тип страницы"
       redirect_to :pages
     end
 
-    @available_substs = plugin_manager.get_available_substitutions_descriptions(@selected_page_type_id)
+    @available_substs = plugin_manager.get_available_substitutions_descriptions(@page_type.id)
 
     @allowed_form_fields = [:url, :title, :layout]
-
-    @additional_form_partials = []
-
   end
 
   # GET /pages
@@ -56,7 +70,6 @@ class PagesController < ApplicationController
       @page = Page.find params[:id]
     end
 
-    append_view_path(Rails.root.to_s)
     rubal_render @page
     #             .erb_path, :layout  => (@page.layout.nil?) ? false : ('../' + @page.layout.erb_path)
     #return
@@ -70,8 +83,8 @@ class PagesController < ApplicationController
   # GET /pages/new
   # GET /pages/new.json
   def new
-    @page = Page.new
-    @page.type_id= @selected_page_type_id unless @selected_page_type_id.nil?
+    # creating page moved to before_filter
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @page }
@@ -80,17 +93,19 @@ class PagesController < ApplicationController
 
   # GET /pages/1/edit
   def edit
-    #moved to before_filter
-    #@page = Page.find(params[:id])
+    # finding page moved to before_filter
+    # @page = Page.find(params[:id])
   end
 
   # POST /pages
   # POST /pages.json
   def create
-    @page = Page.new(params[:page])
+    # creating page moved to before_filter
+
+
 
     respond_to do |format|
-      if @page.save
+      if @page.update_attributes(params[:page])
         format.html { redirect_to @page, notice: 'Page was successfully created.' }
         format.json { render json: @page, status: :created, location: @page }
       else
@@ -103,16 +118,8 @@ class PagesController < ApplicationController
   # PUT /pages/1
   # PUT /pages/1.json
   def update
-    #moved to before_filter
+    # finding page moved to before_filter
     #@page = Page.find(params[:id])
-
-    pti = RubalCore::PluginManager.instance.get_page_type_hash PageType.find(@page.type_id).name
-
-    unless pti.nil?
-      if pti.include?(:after_save_block) && !pti[:after_save_block].nil?
-        pti[:after_save_block].call(params, @page)
-      end
-    end
 
     respond_to do |format|
       if @page.update_attributes(params[:page])

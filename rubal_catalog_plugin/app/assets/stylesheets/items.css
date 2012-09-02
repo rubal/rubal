@@ -1,0 +1,74 @@
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+*/
+
+table.table-items {
+    width: 100%;
+}
+
+div.plus-button-catalog {
+    margin-top: 20px;
+    text-align: right;
+}
+
+img.item-photo-popover {
+    max-width: 200px;
+    height: auto;
+    max-height: 150px;
+    width: auto;
+    margin: 3px;
+}
+
+input.price {
+    text-align: right;
+}
+
+label.price {
+    margin: 4px 4px 4px 0px;
+}
+
+div.photo-to-delete img {
+    -moz-opacity: 0.50;
+    opacity: 0.50;
+    -ms-filter:"progid:DXImageTransform.Microsoft.Alpha"(Opacity=50);
+
+}
+div.item-photo {
+    text-align: center;
+    position: relative;
+    z-index: 4;
+}
+
+
+div.item-photo img {
+    z-index: 5;
+}
+
+
+div.item-photo div.item-destroy {
+    z-index: 10;
+    position: absolute;
+    top: 5px;
+    left: 0px;
+    width: 300px;
+    padding-top: 5px;
+}
+
+div.item-destroy-container {
+    width: 50px;
+    text-align: center;
+
+}
+
+div.photo-to-delete {
+    background-color: #ffAAAA;
+}
+
+div.old_photos {
+    margin-bottom: 20px;
+}
+
+div.photo-upload {
+    margin-bottom: 10px;
+}

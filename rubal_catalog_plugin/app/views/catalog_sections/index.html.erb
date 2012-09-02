@@ -1,0 +1,25 @@
+<h1>Listing catalog_sections</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @catalog_sections.each do |catalog_section| %>
+  <tr>
+    <td><%= catalog_section.name %></td>
+    <td><%= catalog_section.description %></td>
+    <td><%= link_to 'Show', catalog_section %></td>
+    <td><%= link_to 'Edit', edit_catalog_section_path(catalog_section) %></td>
+    <td><%= link_to 'Destroy', catalog_section, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Catalog section', new_catalog_section_path %>

@@ -1,0 +1,50 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".item-photos-badge").popover({trigger: 'hover'});
+  });
+
+</script>
+<div class="page-header"><h2>Все предметы</h2></div>
+<% @sections.each do |section| %>
+  <div class="row">
+    <div class="span8"><h1><%= section[:name] %></h1></div>
+    <div class="span1 plus-button-catalog">
+     <%= link_to '<i class="icon-plus icon-white"></i>'.html_safe, create_item_in_section_path(section[:key]), :class => "btn btn-small btn-primary" %>
+    </div>
+  </div>
+  <% if section[:items].blank? %>
+    <em>(Предметов еще нет)</em>
+    <div></div>
+  <% else %>
+    <table>
+      <tr>
+        <th>Название</th>
+        <th>описание</th>
+        <th>цена</th>
+        <th>фото</th>
+        <th></th>
+      </tr>
+
+      <% section[:items].each do |item| %>
+        <tr>
+          <td><%= item.name %></td>
+          <td><%= item.description %></td>
+          <td><%= item.price %></td>
+          <td><span class="badge <%= 'badge-info item-photos-badge' unless item.photos.blank? %>" data-title="<%= item.name %>" data-content="<%= (item.photos.map{|p| "<img class='item-photo-popover' src='#{p.data.url(:medium)}'>" }).join.html_safe %>">
+            <i class="icon-camera icon-white"></i> <%= item.photos.size %>
+          </span></td>
+          <td class="buttons">
+            <div class="btn-group">
+              <%= link_to '<i class="icon-eye-open"></i>'.html_safe, item_path(item), :class => 'btn btn-small'  %>
+              <%= link_to '<i class="icon-pencil"></i>'.html_safe, edit_item_path(item) , :class => 'btn btn-small' %>
+              <%= link_to '<i class="icon-remove"></i>'.html_safe, item, confirm: 'Точно?', method: :delete , :class => 'btn btn-small' %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+
+  <% end %>
+<% end %>
+<%= link_to 'New Item', new_item_path %>
+

@@ -1,0 +1,75 @@
+<%= form_for(@item, :html => { :multipart => true } ) do |f| %>
+  <div class="row">
+  <div class="span3">
+    <h2>Описание</h2>
+    <% if @item.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+        <ul>
+        <% @item.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="field">
+      <%= f.label :name, "Название" %>
+      <%= f.text_field :name, :class => 'input-xlarge'  %>
+    </div>
+    <div class="field">
+      <%= f.label :description, "Описание" %>
+      <%= f.text_area :description, :rows => 4, :class => 'input-xlarge' %>
+    </div>
+    <div class="field">
+      <div class="input-append">
+        <%= f.label :price, "Цена", :class => 'help-inline price' %>
+        <%= f.text_field :price, :class => 'input-small price ' %>
+        <span class="add-on"> руб.</span>
+      </div>
+    </div>
+    <% if @selected_section.nil? %>
+    <div class="field">
+      <%= f.label :section_id, "Секция", :class => 'help-inline'%>
+      <%= f.select :section_id, get_sections_for_select %>
+    </div>
+      <% else %>
+      <%= f.hidden_field :section_id, :value =>  @selected_section.id %>
+      <% end %>
+  </div>
+
+  <div class="span6">
+    <h2>Фотографии</h2>
+    <% prev_was_old = !@item.photos.first.new_record? %>
+    <div class='row <%= prev_was_old ? "old_photos" : "new_photos" %>'>
+      <%= f.fields_for :photos do |photo_form| %>
+        <%= ("</div><div class='row new_photos'>".html_safe) if prev_was_old && photo_form.object.new_record? %>
+        <div class="span3 photo-upload">
+          <%= photo_form.text_field :name, :class => "input-xlarge", :placeholder => "Подпись к фотографии"%><br>
+          <% if photo_form.object.new_record?  %>
+            <%= photo_form.file_field :data %>
+          <% else %>
+            <div class="item-photo">
+              <%= image_tag photo_form.object.data.url(:medium), :id => "item-photo-" + photo_form.object.id.to_s %>
+              <div class="item-destroy">
+                <div class="item-destroy-container">
+                  <label class="checkbox">
+                  <%= photo_form.check_box :_destroy, :class => "item-destroy", :deleting_photo_id => "item-photo-" + photo_form.object.id.to_s %>
+                  <%= photo_form.label :_destroy, "Удалить", :class => 'help-inline'%>
+                </label>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <% prev_was_old = !photo_form.object.new_record? %>
+      <% end %>
+    </div>
+  </div>
+ </div>
+  <div class="row">
+      <div class="span4">
+        <%= f.submit :value => "Сохранить", :class => "btn btn-large btn-block btn-primary", :style => 'width: 100%;' %>
+      </div>
+  </div>
+<% end %>
