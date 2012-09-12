@@ -107,8 +107,8 @@ ActiveRecord::Schema.define(:version => 20120829123522) do
     t.integer "permission_id"
   end
 
-  add_index "permissions_user_groups", ["permission_id", "user_group_id"], :name => "index_permissions_user_groups_on_permission_id_and_user_group_id"
-  add_index "permissions_user_groups", ["user_group_id", "permission_id"], :name => "index_permissions_user_groups_on_user_group_id_and_permission_id"
+  #add_index "permissions_user_groups", ["permission_id", "user_group_id"], :name => "index_permissions_user_groups_on_permission_id_and_user_group_id"
+  #add_index "permissions_user_groups", ["user_group_id", "permission_id"], :name => "index_permissions_user_groups_on_user_group_id_and_permission_id"
 
   create_table "plugin_infos", :force => true do |t|
     t.string   "full_name"
