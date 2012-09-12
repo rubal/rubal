@@ -1,7 +1,7 @@
 {:common=>
 	{:cms_name=>"rubal"},
 :pages=>
-  {:page_erb_dir => "/pages/", :redirect_on_permission_denied => '/?permission_denied'},
+  {:page_erb_dir => "/pages/", :redirect_on_permission_denied => '/permission_denied'},
 :plugins=>
   {},
 :basic_user_groups =>

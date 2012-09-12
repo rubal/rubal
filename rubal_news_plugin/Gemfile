@@ -17,3 +17,5 @@ gem 'rubal_core', path: '../rubal_core'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+gem 'truncate_html'

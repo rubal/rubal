@@ -19,11 +19,11 @@ module RubalNewsPlugin
 
       @substitutions = []
 
-      after_save = lambda { |params, page|
+      before_save = lambda { |params, page|
           page.additional_params= {:trend_id => params[:trend_id].to_i}
       }
 
-      form_params = {:after_save => after_save, :additional_form_fields => "/news/page_additional_form_fields.html.erb"}
+      form_params = {:before_save => before_save, :additional_form_fields => "/news/page_additional_form_fields.html.erb"}
 
       RubalCore::PluginManager.instance.register_page_type(self, 'news_normal', 'Новости', "Страница с новостями", 'news#news_with_trend', form_params)
 

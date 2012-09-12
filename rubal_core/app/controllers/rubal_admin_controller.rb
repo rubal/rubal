@@ -1,11 +1,4 @@
 class RubalAdminController < ApplicationController
-  before_filter do
-    #puts action_name
-    #puts controller_name
-    #puts controller_path
-    #puts "-"*10
-  end
-
   def browse_users
     @users = User.order(:created_at)
     @groups = UserGroup.order(:created_at)
@@ -22,5 +15,14 @@ class RubalAdminController < ApplicationController
     end
 
     render :inline => "success"
+  end
+
+  def devise_sign_out
+    sign_out(current_user)
+    redirect_to '/'
+  end
+
+  def index
+    render :inline => "<h1>ADMIIIIN</h1>"
   end
 end

@@ -60,5 +60,9 @@ module RubalLi
     #  puts "adding " + Rails.root.to_s + '/' + p +'/lib'
     #  config.autoload_paths += Dir[Rails.root.to_s + '/' + p +'/lib']
     #}
+
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance|
+      "<div class='control-group error'>#{html_tag}</div>".html_safe
+    }
   end
 end

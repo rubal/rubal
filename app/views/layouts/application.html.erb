@@ -25,7 +25,7 @@
       <% end %>
 
       $(document).ready(function() {
-        <% if params[:edit_wysiwyg] %>
+        <% if params[:edit_wysiwyg] || @enable_wysiwyg %>
           $('textarea.wysiwyg').tinymce({
               script_url : '/tiny_mce/tiny_mce.js',
               plugins : "youtubeIframe",
@@ -62,9 +62,9 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                   <i class="icon-user"></i> <%= current_user.email %><b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                  <li><%= link_to('Редактировать', edit_user_registration_path) %></li>
+                  <li><%= link_to('Редактировать', edit_user_registration_path, confirm: 'Точно?') %></li>
                   <li class="divider"></li>
-                  <li><%= link_to('Выйти', destroy_user_session_path, :method => :delete) %></li>
+                  <li><%= link_to('Выйти', :sign_out) %></li>
                 </ul>
               <% end %>
             </li>
@@ -78,13 +78,25 @@
     <div class="span3">
       <%= render('menu/admin_menu') %>
     </div>
-    <div class="span9"><%= yield %></div>
+    <div class="span9">
+
+      <% unless alert.blank? %>
+        <div class="alert">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <i class="icon-hand-right"></i> <%= alert %>
+        </div>
+      <% end %>
+
+      <% unless notice.blank? %>
+        <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <i class="icon-ok"></i> <%= notice %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
   </div>
-
-
-    <%= notice %>
-    <%= alert %>
-
 
 </div>
 </body>

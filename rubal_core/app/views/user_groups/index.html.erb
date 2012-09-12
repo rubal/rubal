@@ -7,12 +7,14 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
 <% @user_groups.each do |user_group| %>
   <tr>
     <td><%= user_group.name %></td>
     <td><%= user_group.key %></td>
+    <td><%= link_to 'permissions', edit_group_permissions_path(user_group.key) %></td>
     <td><%= link_to 'Show', user_group %></td>
     <td><%= link_to 'Edit', edit_user_group_path(user_group) %></td>
     <td><%= link_to 'Destroy', user_group, method: :delete, data: { confirm: 'Are you sure?' } %></td>

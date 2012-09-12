@@ -18,8 +18,8 @@ class PageType < ActiveRecord::Base
     form_params[:additional_form_fields]
   end
 
-  def after_save
-    form_params[:after_save]
+  def before_save
+    form_params[:before_save]
   end
 
   def to_s

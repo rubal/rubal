@@ -9,6 +9,6 @@ module RubalCore::RubalController
 
     fail "Unknown page type" if page_obj.nil?
     append_view_path(Rails.root.to_s)
-    render page_obj.erb_path, :layout  => (page_obj.layout.nil?) ? false : (page_obj.layout.erb_path)
+    render page_obj.erb_path, :layout  => (page_obj.layout.nil?) ? false : ('../' + page_obj.layout.erb_path)
   end
 end

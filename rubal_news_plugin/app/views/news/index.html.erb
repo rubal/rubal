@@ -1,5 +1,6 @@
 <div class="page-header"><h2>Все новости</h2></div>
 <% @trends.each do |trend| %>
+  <div class="news-index-thread skip-last-bottom-border">
     <div class="row">
       <div class="span8"><h1><%= trend[:name] %></h1></div>
       <div class="span1 plus-button-news">
@@ -10,25 +11,31 @@
      <em>(Новостей еще нет)</em>
      <div></div>
    <% else %>
-    <table class="table table-news">
-      <tr>
-        <th class="span3">Заголовок</th>
-        <th class="span4">Содержание</th>
-        <th class="span2"></th>
-      </tr>
     <% trend[:news].each do |news| %>
-      <tr>
-        <td><%= news.header %></td>
-        <td><%= news.content %></td>
-        <td class="buttons">
-          <div class="btn-group">
-            <%= link_to '<i class="icon-eye-open"></i>'.html_safe, news_path(news), :class => 'btn btn-small'  %>
-            <%= link_to '<i class="icon-pencil"></i>'.html_safe, edit_news_path(news) , :class => 'btn btn-small' %>
-            <%= link_to '<i class="icon-remove"></i>'.html_safe, news, confirm: 'Точно?', method: :delete , :class => 'btn btn-small' %>
+      <div class="news-index skip-last-bottom-border">
+        <div class="row">
+          <div class="span6">
+            <h4><%= news.header %></h4>
           </div>
-        </td>
-      </tr>
+          <div class="span2">
+            <p class="muted"><%= news.date.strftime("%M:%H %d/%m/%Y")  %></p>
+          </div>
+          <div class="span1">
+            <div class="btn-group">
+              <%= link_to '<i class="icon-eye-open"></i>'.html_safe, news_path(news), :class => 'btn btn-small'  %>
+              <%= link_to '<i class="icon-pencil"></i>'.html_safe, edit_news_path(news) , :class => 'btn btn-small' %>
+              <%= link_to '<i class="icon-remove"></i>'.html_safe, news, confirm: 'Точно?', method: :delete , :class => 'btn btn-small' %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span9">
+            <%= truncate_html(news.content, :length => 230)%>
+          </div>
+        </div>
+      </div>
     <% end %>
-    </table>
+
    <% end %>
+  </div>
 <% end %>

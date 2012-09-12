@@ -1,3 +1,4 @@
+<% @enable_wysiwyg = true %>
 <%= form_for(@news) do |f| %>
   <% if @news.errors.any? %>
     <div id="error_explanation">
@@ -21,18 +22,17 @@
   </div>
   <div class="field">
     <% unless @selected_trend %>
-        <%= f.label :trend_id, "Раздел" %><br />
+        <%= f.label :trend_id, "Раздел" %>
         <%= f.select :trend_id, get_trends_for_select %>
     <% else %>
         <%= f.hidden_field :trend_id, :value => @selected_trend.id %>
     <% end %>
   </div>
   <div class="field">
-    <%= f.label :content, "Тело новости" %>
     <%= f.text_area :content, :class => "input-xxlarge wysiwyg" %>
   </div>
   <br>
   <div class="actions">
-    <%= f.submit :value => "Сохранить новость", :class => "btn btn-large btn-primary", %>
+    <%= f.submit :value => "Сохранить новость", :class => "btn btn-large btn-primary" %>
   </div>
 <% end %>

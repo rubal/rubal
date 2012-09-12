@@ -92,6 +92,7 @@ GEM
     treetop (1.4.10)
       polyglot
       polyglot (>= 0.3.1)
+    truncate_html (0.5.5)
     tzinfo (0.3.33)
 
 PLATFORMS
@@ -102,3 +103,4 @@ DEPENDENCIES
   rubal_core!
   rubal_news_plugin!
   sqlite3
+  truncate_html

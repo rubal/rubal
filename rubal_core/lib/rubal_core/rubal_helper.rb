@@ -2,11 +2,13 @@ module RubalCore::RubalHelper
   require_relative "../rubal_core"
 
   def current_user_group
-    (current_user.nil?) ? UserGroup.find_by_key(RubalCore::Settings.instance[:basic_user_groups][:guest][:key]) : current_user.user_group
+    (current_user.nil?) ? UserGroup.find_by_key(RubalCore::Settings.instance[:basic_user_groups][:guests][:key]) : current_user.user_group
   end
 
   def access_allowed? user_group, target_page
     return true if user_group.key == RubalCore::Settings.instance[:basic_user_groups][:admins][:key]
+
+    (return true if self.class.name.split("::").first == "Devise") unless self.class.name.nil?
 
     color_log(target_page.to_s, :red)
 
@@ -25,6 +27,8 @@ module RubalCore::RubalHelper
       return false
     end
 
+
+
     permissions = user_group.permissions
 
     permissions.each do |permission|
@@ -40,6 +44,9 @@ module RubalCore::RubalHelper
 
   def if_allowed_for_user(url, &block)
     allowed = (access_allowed?(current_user_group, ((url.kind_of?(Symbol)) ? url_for(url) : url)))
+    puts "8"*88
+    puts url
+    puts allowed
     if (block_given? && allowed)
       block.call()
     else

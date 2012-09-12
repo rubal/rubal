@@ -18,6 +18,8 @@ module RubalCore
   autoload :PermissionManager, "rubal_core/permission_manager"
   autoload :PageType, File.expand_path("rubal_core/app/models/page_type", Rails.root.to_s)
   autoload :PageContent, File.expand_path("rubal_core/app/models/page_content", Rails.root.to_s)
+
+  require "rubal_core/rubal_core_plugins"
 end
 
 class ActiveSupport::BufferedLogger

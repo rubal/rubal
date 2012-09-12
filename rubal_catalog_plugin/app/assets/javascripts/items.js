@@ -10,4 +10,6 @@ $(document).ready(function() {
             $("#" + $(this).attr('deleting_photo_id')).closest('div.item-photo').removeClass('photo-to-delete');
         }
     });
+
+    $(".item-photos-badge").popover({trigger: 'hover'});
 });

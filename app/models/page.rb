@@ -4,7 +4,7 @@ require "pages_helper"
 class Page < ActiveRecord::Base
   include PagesHelper
 
-  validate :name, :presence  => true
+  validates :name, :presence  => true
 
   belongs_to :layout, :class_name => 'Page'
   serialize :additional_params, Hash
@@ -25,11 +25,16 @@ class Page < ActiveRecord::Base
   end
 
   before_save do
-    unless type.after_save.nil?
-      puts "AAAAAAAAAA"
-      puts @params_for_type_before_save
-      type.after_save.call(@params_for_type_before_save, self)
+    unless type.before_save.nil?
+      type.before_save.call(@params_for_type_before_save, self)
     end
+  end
+
+  after_save do
+
+    # TODO: только для страниц с ненулевым route processor
+    RubalLi::Application.reload_routes!
+
   end
 
 end

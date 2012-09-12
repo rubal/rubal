@@ -13,9 +13,10 @@ RubalLi::Application.routes.draw do
 
   RubalCore::PluginManager.instance.get_routing_rules.each_pair{|page_type, processor|
     Page.find_all_by_type_id(PageType.find_by_name(page_type.to_s).id).each{|p|
-      color_log("Configuring routes for " + page_type, :green)
+      color_log("Building routes for " + page_type, :green)
       if processor.kind_of? String
         match p.url + ".html" => processor, :url => p.url
+        root :to => processor, :url => p.url if p.url.downcase == 'index'
       elsif (processor.kind_of? Proc)
         #begin
           processor.call(self, p.url)
@@ -30,6 +31,10 @@ RubalLi::Application.routes.draw do
 
 
   match "/:url.html" => 'pages#show'
+
+  match "/permission_denied" => 'pages#permission_denied'
+
+  root :to => 'pages#show', :url => 'index'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
