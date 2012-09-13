@@ -48,3 +48,4 @@ gem 'rubal_catalog_plugin', path: 'rubal_catalog_plugin'
 gem 'devise'
 gem 'paperclip', '3.0.4'
 gem 'truncate_html'
+gem 'bcrypt-ruby', "~> 3.0.0"
