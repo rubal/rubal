@@ -8,7 +8,7 @@ module RubalCore::RubalController
     page_obj ||= Page.find_by_url(page) if page.kind_of? String
 
     fail "Unknown page type" if page_obj.nil?
-    append_view_path(Rails.root.to_s)
-    render page_obj.erb_path, :layout  => (page_obj.layout.nil?) ? false : ('../' + page_obj.layout.erb_path)
+    prepend_view_path(Rails.root.to_s)
+    render page_obj.erb_path, :layout  => (page_obj.layout.nil?) ? false : (page_obj.layout.erb_path)
   end
 end

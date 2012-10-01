@@ -120,7 +120,12 @@ class ItemsController < ApplicationController
   end
 
   def browse_section
-    logger.debug "\033[0;34m#{@selected_section.to_s}\033[0;37m"
-    logger.debug " that's what we found"
+    @page = Page.find_by_url(params[:url])
+    if(@selected_section.nil?)
+      redirect_to "/"
+      return
+    end
+    @items = Item.find_all_by_section_id(@selected_section.id)
+    rubal_render(@page)
   end
 end

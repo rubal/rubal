@@ -17,7 +17,7 @@ module RubalCore
       plugin_manager.register_plugin self
 
       plugin_manager.register_page_type self, 'page', 'Страница', "Обычная страница со всеми доступными подстановками"
-      plugin_manager.register_page_type self, 'layout', 'Шаблон', "Внешнее обрамление для страниц", nil, {:form_fields => []}
+      plugin_manager.register_page_type self, 'layouts', 'Шаблон', "Внешнее обрамление для страниц", nil, {:form_fields => []}
 
       @substitutions = []
 
@@ -25,7 +25,7 @@ module RubalCore
 
       @substitutions.push RubalSubstitution.new(self, "page_text", "<%= get_page_content_for(@page.id) %>", "Текст страницы")
 
-      @substitutions.push RubalSubstitution.new(self, "content", "<%= yield %>", "Контент страницы", :only => :layout)
+      @substitutions.push RubalSubstitution.new(self, "content", "<%= yield %>", "Контент страницы", :only => :layouts)
 
       plugin_manager.register_menu_node('Страницы', :pages)
 

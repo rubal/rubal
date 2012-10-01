@@ -26,7 +26,6 @@ class PagesController < ApplicationController
 
         unless params[:page].blank?
           @page_type = PageType.find(params[:page][:type_id]) unless params[:page][:type_id].blank?
-          puts @page_type
         end
 
       elsif ['edit', 'update'].include? action_name.to_s
@@ -152,6 +151,9 @@ class PagesController < ApplicationController
   end
 
   def perf_test_create
+    render :inline => 'lol'
+    return
+
     require "time"
     t1 = Time.now
 

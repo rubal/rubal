@@ -44,9 +44,6 @@ module RubalCore::RubalHelper
 
   def if_allowed_for_user(url, &block)
     allowed = (access_allowed?(current_user_group, ((url.kind_of?(Symbol)) ? url_for(url) : url)))
-    puts "8"*88
-    puts url
-    puts allowed
     if (block_given? && allowed)
       block.call()
     else

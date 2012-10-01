@@ -51,6 +51,15 @@
           <% else %>
             <div class="item-photo">
               <%= image_tag photo_form.object.data.url(:medium), :id => "item-photo-" + photo_form.object.id.to_s %>
+
+              <div class="item-main">
+                <div class="item-main-container">
+                  <label class="checkbox">
+                    <%= f.radio_button :main_photo_id, photo_form.object.id, :class => "item-main" %>
+                  </label>
+                </div>
+              </div>
+
               <div class="item-destroy">
                 <div class="item-destroy-container">
                   <label class="checkbox">

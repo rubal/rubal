@@ -60,18 +60,18 @@
   <% end %>
 
   <div class="row">
-    <div class="span9">
+    <div class="span6">
       <%= f.label :rubhtml_content %>
       <div class="field" id="cm-normal-container">
-        <%= f.text_area :rubhtml_content, :class => 'input-xxlarge', :id => 'rubal-vhtml-editor' %>
+        <%= f.text_area :rubhtml_content, :class => 'input-xlarge', :id => 'rubal-vhtml-editor', :rows => 80 %>
       </div>
     </div>
-    <!--<div class="span3">
+    <div class="span3">
       <% @available_substs.each{|s| %>
         <b><%= s[:substitution] %></b><br>
         <i><%= s[:description] %></i><br>
       <% } %>
-    </div>-->
+    </div>
   </div>
   <div class="actions">
     <%= f.submit  :value => 'Сохранить', :class => 'btn btn-primary' %>

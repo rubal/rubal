@@ -67,7 +67,7 @@ module RubalCore
     # Save changes to file
     # * filename -- path to file
     def flush filename = Filename
-      puts self.to_s
+      #puts self.to_s
       File.open(filename,"w"){|file|
         file.print self.to_s
       }
